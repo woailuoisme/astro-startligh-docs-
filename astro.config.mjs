@@ -11,6 +11,11 @@ import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
+    markdown: {
+        shikiConfig: {
+            theme: 'dracula',
+        },
+    },
     integrations: [starlight({
         title: "My Docs",
         social: [
