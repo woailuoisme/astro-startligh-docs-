@@ -13,7 +13,6 @@ import starlightGithubAlerts from "starlight-github-alerts";
 import starlightHeadingBadges from "starlight-heading-badges";
 import starlightImageZoom from "starlight-image-zoom";
 import starlightLinksValidator from "starlight-links-validator";
-import starlightOpenAPI, { openAPISidebarGroups } from "starlight-openapi";
 import starlightScrollToTop from "starlight-scroll-to-top";
 import starlightTelescope from "starlight-telescope";
 
@@ -34,7 +33,7 @@ export default defineConfig({
 			},
 		}),
 		starlight({
-			title: "RealtimeAPI",
+			title: "VendingAPI",
 			pagefind: false,
 			social: [
 				{
@@ -63,29 +62,13 @@ export default defineConfig({
 				starlightGithubAlerts(), // GitHub 风格告警块
 				starlightScrollToTop(), // 回到顶部按钮
 				starlightHeadingBadges(), // 标题内嵌 badge
-				// REST API — OpenAPI 规范自动生成文档页
-				starlightOpenAPI([
-					{
-						base: "rest",
-						schema: "./src/spec/openapi.yaml",
-						label: "REST API",
-						collapsed: false,
-					},
-				]),
-				starlightLinksValidator({
-					exclude: ["/rest", "/rest/**"],
-				}), // OpenAPI 生成路由由插件产出，跳过其链接校验
+				starlightLinksValidator(),
 			],
 			components: {
 				Search: "./src/components/TopNav.astro",
 				Sidebar: "./src/components/Sidebar.astro",
 			},
 			sidebar: [
-				{
-					label: "REST API",
-					collapsed: false,
-					items: [...openAPISidebarGroups],
-				},
 				{
 					label: "SSE",
 					collapsed: false,

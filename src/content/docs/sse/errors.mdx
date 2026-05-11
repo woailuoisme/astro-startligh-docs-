@@ -1,0 +1,26 @@
+---
+title: 错误
+description: 鉴权过期和错误事件处理方式。
+sidebar:
+  order: 5
+---
+
+## 错误事件
+
+鉴权过期时服务端发送错误事件后关闭连接：
+
+```text
+event: error
+data: {"code":"TOKEN_EXPIRED","message":"Admin token expired"}
+```
+
+客户端应刷新 token 后重新连接。
+
+## 常见错误码
+
+| 错误码 | 含义 |
+| --- | --- |
+| `TOKEN_EXPIRED` | 管理员 token 已过期。 |
+| `STREAM_FORBIDDEN` | 当前管理员无权访问筛选后的事件流。 |
+| `FILTER_INVALID` | 查询参数格式错误。 |
+| `REPLAY_WINDOW_EXPIRED` | `Last-Event-ID` 超出服务端保留窗口。 |

@@ -1,0 +1,44 @@
+---
+title: 连接
+description: WebSocket endpoint、协议参数和 Pusher 风格连接建立事件。
+sidebar:
+  order: 2
+---
+
+## 端点
+
+```text
+wss://realtime.vending.example.com/app/{app_key}?protocol=7&client=vending-app&version=1.0
+```
+
+| 参数 | 说明 |
+| --- | --- |
+| `app_key` | 应用项目的公开 key。 |
+| `protocol` | Pusher Channels 协议版本，当前固定为 `7`。 |
+| `client` | 客户端标识，例如 `ios`, `android`, `web`, `vending-app`。 |
+| `version` | 客户端 SDK 版本。 |
+
+## 消息信封
+
+所有消息使用 Pusher 风格消息信封。`data` 是 JSON 字符串，不是嵌套对象。
+
+```json
+{
+	"event": "order.payment_authorized",
+	"channel": "private-order.order_01J4V8WZ7C8QK6RXQS7DD6F4ZV",
+	"data": "{\"order_id\":\"order_01J4V8WZ7C8QK6RXQS7DD6F4ZV\",\"status\":\"paid\"}"
+}
+```
+
+## 连接建立
+
+连接成功后服务端发送：
+
+```json
+{
+	"event": "pusher:connection_established",
+	"data": "{\"socket_id\":\"948832.123456\",\"activity_timeout\":30}"
+}
+```
+
+客户端必须保存 `socket_id`，后续订阅私有频道时用于服务端鉴权。

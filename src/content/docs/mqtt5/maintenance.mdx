@@ -1,0 +1,53 @@
+---
+title: 远程维护
+description: 远程维护命令、执行结果和支持的维护动作。
+sidebar:
+  order: 5
+---
+
+## 维护命令
+
+平台通过 `vm/{machineId}/maintenance/commands` 下发命令。每个命令都必须有 `command_id`，设备需要按 `command_id` 做幂等。
+
+```json
+{
+	"command_id": "cmd_01J4V90KWF8Z47D5V7G3P6E8XR",
+	"issued_at": "2026-05-12T10:20:00Z",
+	"expires_at": "2026-05-12T10:25:00Z",
+	"type": "run_diagnostics",
+	"requested_by": "admin_01HZZ",
+	"parameters": {
+		"include_microwave": true,
+		"include_cabinet": true
+	}
+}
+```
+
+## 支持的命令类型
+
+| 类型 | 用途 |
+| --- | --- |
+| `run_diagnostics` | 检测温控、门锁、货道、微波炉和控制板。 |
+| `reboot_controller` | 重启主控板。 |
+| `disable_sales` | 暂停售卖。 |
+| `enable_sales` | 恢复售卖。 |
+| `unlock_service_door` | 授权维护人员打开服务门。 |
+| `firmware_update` | 拉取并安装指定固件版本。 |
+
+## 维护回执
+
+```json
+{
+	"command_id": "cmd_01J4V90KWF8Z47D5V7G3P6E8XR",
+	"machine_id": "vm_shanghai_001",
+	"status": "succeeded",
+	"completed_at": "2026-05-12T10:20:18Z",
+	"result": {
+		"cabinet_ok": true,
+		"microwave_ok": true,
+		"slot_failures": []
+	}
+}
+```
+
+命令失败时 `status` 使用 `failed`，并返回稳定错误码，例如 `MICROWAVE_SELF_TEST_FAILED`、`SERVICE_DOOR_OPEN`、`COMMAND_EXPIRED`。

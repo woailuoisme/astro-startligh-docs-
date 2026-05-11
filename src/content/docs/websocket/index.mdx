@@ -1,67 +1,45 @@
 ---
-title: WebSocket
-description: Bidirectional real-time contract, handshake flow, examples, and troubleshooting.
+title: WebSocket 应用端同步协议
+description: 仿 Pusher Channels 的应用端订单、出餐、加热和取餐实时同步协议。
+sidebar:
+  order: 1
+  label: 概览
 ---
 
-## Overview
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-WebSocket is used for bidirectional, low-latency communication where clients can send and receive events on the same connection.
+## 概览
 
-## Version and compatibility
+WebSocket 用于应用端实时同步订单状态、支付状态、出餐流程、微波炉加热进度和取餐结果。协议采用 Pusher Channels 风格的消息信封、连接事件、订阅事件和私有频道鉴权方式，便于移动端复用成熟的事件模型。
 
-- Current version: 2.1.0
-- Authentication and error semantics are documented in this protocol contract.
+命令类操作不通过 WebSocket 发起。创建订单、支付、出餐和加热任务必须调用业务 HTTP 服务，WebSocket 只负责把结果推送到应用端。
 
-## Lifecycle
+## 章节
 
-1. Client opens the connection and authenticates during the handshake.
-2. Server accepts the session and assigns it to a channel or conversation.
-3. Client sends events or commands.
-4. Server sends responses, broadcasts, or close signals.
-
-## Message envelope
-
-```json
-{
-  "event": "chat.message",
-  "payload": {
-    "text": "Hello world",
-    "userId": "u_123"
-  }
-}
-```
-
-## Success example
-
-```json
-{
-  "event": "room.joined",
-  "payload": {
-    "roomId": "room_42",
-    "memberCount": 8
-  }
-}
-```
-
-## Failure example
-
-```json
-{
-  "event": "error",
-  "payload": {
-    "code": 400,
-    "error": "BAD_REQUEST",
-    "message": "event is required"
-  }
-}
-```
-
-## Troubleshooting
-
-- If the connection closes during handshake, check the token and handshake headers.
-- If messages are not delivered, confirm the event name and target channel are correct.
-- If the server closes the session, inspect the close code and reason in the protocol docs.
-
-## Related sources
-
-- [Home](/)
+<CardGrid>
+	<LinkCard
+		title="连接"
+		href="/websocket/connection/"
+		description="WebSocket endpoint、协议参数和 Pusher 风格连接建立事件。"
+	/>
+	<LinkCard
+		title="鉴权"
+		href="/websocket/auth/"
+		description="私有频道鉴权、订阅请求和 subscription succeeded 事件。"
+	/>
+	<LinkCard
+		title="频道"
+		href="/websocket/channels/"
+		description="用户、订单和设备 presence channel 命名规则。"
+	/>
+	<LinkCard
+		title="事件"
+		href="/websocket/events/"
+		description="订单支付、出餐、加热、取餐和退款事件。"
+	/>
+	<LinkCard
+		title="可靠性"
+		href="/websocket/reliability/"
+		description="Heartbeat、错误码、重连和至少一次投递规则。"
+	/>
+</CardGrid>

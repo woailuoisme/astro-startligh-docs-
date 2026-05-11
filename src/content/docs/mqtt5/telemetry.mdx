@@ -1,0 +1,75 @@
+---
+title: 遥测
+description: 设备遥测、retained status 和库存快照 payload。
+sidebar:
+  order: 4
+---
+
+## 遥测 Payload
+
+```json
+{
+	"event_id": "evt_01J4V8Q6YJJ1MB8Z4T9A0W7M0E",
+	"machine_id": "vm_shanghai_001",
+	"occurred_at": "2026-05-12T10:15:30Z",
+	"cabinet": {
+		"temperature_c": 3.4,
+		"target_temperature_c": 4,
+		"compressor_running": true
+	},
+	"microwave": {
+		"state": "idle",
+		"last_cycle_seconds": 90,
+		"door_closed": true
+	},
+	"doors": {
+		"service_door_locked": true,
+		"pickup_door_locked": true
+	},
+	"network": {
+		"rssi_dbm": -67,
+		"carrier": "4g",
+		"latency_ms": 82
+	},
+	"firmware": {
+		"controller": "2.8.1",
+		"payment_terminal": "1.13.4"
+	}
+}
+```
+
+## 保留状态
+
+```json
+{
+	"machine_id": "vm_shanghai_001",
+	"state": "online",
+	"sales_enabled": true,
+	"maintenance_mode": false,
+	"last_seen_at": "2026-05-12T10:15:30Z",
+	"active_faults": [],
+	"capabilities": ["cold_storage", "microwave_heating", "remote_reboot"]
+}
+```
+
+`status` 必须 retained。控制台订阅后应立即获得最后状态，不需要等待下一次心跳。
+
+## 库存快照
+
+```json
+{
+	"machine_id": "vm_shanghai_001",
+	"reported_at": "2026-05-12T10:15:30Z",
+	"slots": [
+		{
+			"slot_id": "A03",
+			"meal_sku": "meal_beef_rice",
+			"quantity": 6,
+			"expires_at": "2026-05-13T16:00:00Z",
+			"locked": false
+		}
+	]
+}
+```
+
+库存快照必须 retained。补货完成、出餐成功、出餐失败恢复后，设备都需要重新发布完整快照。

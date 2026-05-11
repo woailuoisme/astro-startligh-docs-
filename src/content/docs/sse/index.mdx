@@ -1,53 +1,40 @@
 ---
-title: SSE
-description: Server-sent events contract, lifecycle, examples, and troubleshooting.
+title: SSE 运营事件流
+description: 运营后台使用的设备、库存、订单、出餐、加热和告警事件流。
+sidebar:
+  order: 1
+  label: 概览
 ---
 
-## Overview
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-Server-sent events are used for one-way, server-initiated delivery where clients keep a long-lived HTTP connection open to receive updates.
+## 概览
 
-## Version and compatibility
+SSE 用于运营后台、告警控制台和大屏监控。它是服务端到浏览器的单向事件流，适合观察全局设备状态、库存低水位、温控异常、出餐失败和维护结果。
 
-- Current version: 2.1.0
-- Authentication and error semantics are documented in this protocol contract.
+设备不上行 SSE，应用端订单同步也不使用 SSE。设备使用 MQTT5，应用端使用 WebSocket。
 
-## Lifecycle
+## 章节
 
-1. Client opens a long-lived event stream.
-2. Server accepts the connection and begins sending events.
-3. Client receives named events with payload data.
-4. Either side can end the stream, and the docs should explain the recovery path.
-
-## Event format
-
-```text
-event: alert.warning
-id: evt_01HX
-data: {"level":"warn","message":"Temperature above threshold"}
-```
-
-## Success example
-
-```text
-event: device.online
-id: evt_01HY
-data: {"deviceId":"dev_42","status":"online"}
-```
-
-## Failure example
-
-```text
-event: error
-data: {"code":401,"error":"UNAUTHORIZED","message":"Token invalid or expired"}
-```
-
-## Troubleshooting
-
-- If the stream closes immediately, check authentication and target availability.
-- If events are missing, confirm the event name and stream name match the published contract.
-- If payload parsing fails, verify the JSON structure is valid and complete.
-
-## Related sources
-
-- [Home](/)
+<CardGrid>
+	<LinkCard
+		title="端点"
+		href="/sse/endpoint/"
+		description="运营事件流地址、鉴权请求头和过滤参数。"
+	/>
+	<LinkCard
+		title="事件"
+		href="/sse/events/"
+		description="事件格式、事件类型和完整 stream 示例。"
+	/>
+	<LinkCard
+		title="重连"
+		href="/sse/reconnect/"
+		description="Last-Event-ID、retry、心跳和至少一次投递规则。"
+	/>
+	<LinkCard
+		title="错误"
+		href="/sse/errors/"
+		description="鉴权过期和错误事件处理方式。"
+	/>
+</CardGrid>

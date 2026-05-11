@@ -1,0 +1,25 @@
+---
+title: 重连
+description: Last-Event-ID、retry、心跳和至少一次投递规则。
+sidebar:
+  order: 4
+---
+
+## 重连规则
+
+- 客户端必须支持自动重连。
+- 服务端建议发送 `retry: 3000`，客户端可按指数退避增加到 30 秒。
+- 客户端必须保存最新 `id`，重连时通过 `Last-Event-ID` 续传。
+- 事件至少投递一次，运营后台按 `id` 去重。
+- 心跳使用注释行 `: heartbeat`，不包含业务数据。
+
+## 续传请求
+
+```http
+GET https://api.vending.example.com/v1/events/operations
+Authorization: Bearer admin_jwt
+Accept: text/event-stream
+Last-Event-ID: evt_01J4V90KWF8Z47D5V7G3P6E8XR
+```
+
+服务端只保证短期事件续传。超过保留窗口后，运营后台应重新拉取快照数据，再重新连接事件流。

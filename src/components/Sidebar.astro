@@ -14,8 +14,6 @@ if (pathname === "/") {
 	filteredSidebar = [];
 } else if (pathname.startsWith("/mqtt5")) {
 	filteredSidebar = sidebar.filter((entry) => entry.label === "MQTT 5");
-} else if (pathname.startsWith("/rest")) {
-	filteredSidebar = sidebar.filter((entry) => entry.label === "REST API");
 } else if (pathname.startsWith("/sse")) {
 	filteredSidebar = sidebar.filter((entry) => entry.label === "SSE");
 } else if (pathname.startsWith("/websocket")) {

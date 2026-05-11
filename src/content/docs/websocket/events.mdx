@@ -1,0 +1,54 @@
+---
+title: 事件
+description: 订单支付、出餐、加热、取餐和退款事件。
+sidebar:
+  order: 5
+---
+
+## 业务事件
+
+| 事件 | 频道 | 说明 |
+| --- | --- | --- |
+| `order.payment_authorized` | `private-order.{orderId}` | 支付已授权，可以创建出餐任务。 |
+| `dispense.started` | `private-order.{orderId}` | 设备开始从冰柜货道出餐。 |
+| `dispense.slot_unlocked` | `private-order.{orderId}` | 目标货道或取餐门已解锁。 |
+| `heating.started` | `private-order.{orderId}` | 微波炉开始加热。 |
+| `heating.completed` | `private-order.{orderId}` | 加热完成。 |
+| `pickup.ready` | `private-order.{orderId}` | 盒饭可取。 |
+| `order.completed` | `private-order.{orderId}` | 订单完成。 |
+| `order.failed` | `private-order.{orderId}` | 订单失败，需要补偿或退款。 |
+| `refund.pending` | `private-user.{userId}` | 退款已进入处理队列。 |
+
+## 订单流程示例
+
+```json
+{
+	"event": "order.payment_authorized",
+	"channel": "private-order.order_01J4V8WZ7C8QK6RXQS7DD6F4ZV",
+	"data": "{\"event_id\":\"evt_pay_01J4\",\"order_id\":\"order_01J4V8WZ7C8QK6RXQS7DD6F4ZV\",\"amount\":28.5,\"currency\":\"CNY\"}"
+}
+```
+
+```json
+{
+	"event": "dispense.started",
+	"channel": "private-order.order_01J4V8WZ7C8QK6RXQS7DD6F4ZV",
+	"data": "{\"event_id\":\"evt_disp_01J4\",\"machine_id\":\"vm_shanghai_001\",\"slot_id\":\"A03\",\"meal_sku\":\"meal_beef_rice\"}"
+}
+```
+
+```json
+{
+	"event": "heating.completed",
+	"channel": "private-order.order_01J4V8WZ7C8QK6RXQS7DD6F4ZV",
+	"data": "{\"event_id\":\"evt_heat_01J4\",\"heating_seconds\":90,\"target_temperature_c\":72}"
+}
+```
+
+```json
+{
+	"event": "pickup.ready",
+	"channel": "private-order.order_01J4V8WZ7C8QK6RXQS7DD6F4ZV",
+	"data": "{\"event_id\":\"evt_pickup_01J4\",\"pickup_code\":\"739204\",\"expires_at\":\"2026-05-12T10:40:00Z\"}"
+}
+```

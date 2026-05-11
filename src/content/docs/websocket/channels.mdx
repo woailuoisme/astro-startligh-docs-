@@ -1,0 +1,21 @@
+---
+title: 频道
+description: 用户、订单和设备 presence channel 命名规则。
+sidebar:
+  order: 4
+---
+
+## 频道
+
+| 频道 | 受众 | 用途 |
+| --- | --- | --- |
+| `private-user.{userId}` | 单个应用用户 | 用户维度订单列表、退款、通知同步。 |
+| `private-order.{orderId}` | 订单所有者 | 单笔订单支付、出餐、加热、取餐状态。 |
+| `presence-machine.{machineId}` | 运维控制台 | 观察在线人员和设备实时状态。 |
+
+## 规则
+
+- 应用用户只能订阅自己的 `private-user.{userId}`。
+- 订单频道只允许订单所有者订阅。
+- `presence-machine.{machineId}` 仅允许运营后台订阅。
+- 频道名里的业务 ID 必须使用服务端生成的稳定 ID。

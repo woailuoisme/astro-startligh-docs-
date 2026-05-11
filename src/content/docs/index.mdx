@@ -1,64 +1,58 @@
 ---
-title: Realtime API Protocol Docs
-description: Contract-first entry point for REST API, SSE, WebSocket, and MQTT5 documentation.
+title: 冰柜盒饭自动售货机 API 文档
+description: 面向生产环境的 MQTT5、WebSocket 和 SSE 协议入口。
 template: splash
 tableOfContents: false
 hero:
-  tagline: A compact protocol documentation portal for REST, SSE, WebSocket, and MQTT5 integrations.
+  tagline: 冰柜盒饭售卖、微波炉加热、远程监控维护和应用端实时同步的事件协议文档。
   actions:
-    - text: REST API
-      link: /rest/operations/tags/channels/
+    - text: MQTT5
+      link: /mqtt5/
       icon: right-arrow
-    - text: SSE
-      link: /sse/
+    - text: WebSocket
+      link: /websocket/
       variant: secondary
 ---
 
 import { Aside, Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-## Start Here
+## 协议入口
 
 <CardGrid>
 	<LinkCard
-		title="REST API"
-		href="/rest/operations/tags/channels/"
-		description="Browse generated OpenAPI operation pages."
-	/>
-	<LinkCard
-		title="SSE"
-		href="/sse/"
-		description="Review server-sent event lifecycle and payloads."
+		title="MQTT5"
+		href="/mqtt5/"
+		description="设备遥测、状态 retained 消息、库存快照、告警和远程维护命令。"
 	/>
 	<LinkCard
 		title="WebSocket"
 		href="/websocket/"
-		description="Read the bidirectional realtime message contract."
+		description="仿 Pusher Channels 的应用端订单、支付、出餐、加热和取餐同步。"
 	/>
 	<LinkCard
-		title="MQTT5"
-		href="/mqtt5/"
-		description="Check topic naming, QoS, and subscription behavior."
+		title="SSE"
+		href="/sse/"
+		description="运营后台使用的设备、库存、告警和维护事件流。"
 	/>
 </CardGrid>
 
-## Why This Portal
+## 生产范围
 
 <CardGrid>
-	<Card title="Focused" icon="open-book">
-		Only the protocol entry points needed to integrate with the realtime API.
+	<Card title="冰柜盒饭" icon="open-book">
+		库存以设备货道和盒饭 SKU 为核心，记录保质期、温控状态和可售数量。
 	</Card>
-	<Card title="Contract-first" icon="document">
-		Each page explains request shape, lifecycle, success cases, and failures.
+	<Card title="微波加热" icon="setting">
+		出餐和加热分开建模，支持加热任务、温度达标结果和失败补偿。
 	</Card>
-	<Card title="Generated REST" icon="setting">
-		REST pages are generated from `src/spec/openapi.yaml`.
+	<Card title="远程维护" icon="information">
+		MQTT5 承载设备诊断、暂停售卖、门锁授权、固件升级和执行回执。
 	</Card>
-	<Card title="Ready to validate" icon="approve-check-circle">
-		Use `pnpm check` and `pnpm build` before shipping documentation changes.
+	<Card title="可审计" icon="approve-check-circle">
+		支付、出餐、加热、维护和告警确认都保留可追踪的审计记录。
 	</Card>
 </CardGrid>
 
 <Aside type="tip" title="Recommended path">
-	Start with REST API for resource contracts, then open SSE, WebSocket, or MQTT5
-	based on the realtime delivery model you need.
+	按集成端选择协议：设备端看 MQTT5，应用端看 WebSocket，运营后台看 SSE。
 </Aside>

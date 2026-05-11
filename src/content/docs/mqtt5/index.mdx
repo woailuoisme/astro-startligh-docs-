@@ -1,52 +1,49 @@
 ---
-title: MQTT5
-description: Topic-based publish and subscribe contract, QoS rules, examples, and troubleshooting.
+title: MQTT5 远程监控与维护
+description: 冰柜盒饭自动售货机的设备遥测、状态上报、告警和远程维护命令协议。
+sidebar:
+  order: 1
+  label: 概览
 ---
 
-## Overview
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-MQTT5 is used for topic-based publish/subscribe delivery where clients connect to a broker and exchange messages through topics.
+## 概览
 
-## Version and compatibility
+MQTT5 用于设备侧长连接：自动售货机上报冰柜、货道、微波炉、门锁、控制板和网络状态；运营平台下发远程维护命令。订单创建、支付、出餐和加热任务由业务 HTTP 服务发起，MQTT5 只负责设备监控与维护通道。
 
-- Current version: 2.1.0
-- Authentication and error semantics are documented in this protocol contract.
+## 章节
 
-## Lifecycle
+<CardGrid>
+	<LinkCard
+		title="连接"
+		href="/mqtt5/connection/"
+		description="Broker、mTLS、Client ID、会话和证书绑定规则。"
+	/>
+	<LinkCard
+		title="主题约定"
+		href="/mqtt5/topics/"
+		description="设备遥测、状态、库存、告警和维护 topic 约定。"
+	/>
+	<LinkCard
+		title="遥测"
+		href="/mqtt5/telemetry/"
+		description="遥测 payload、retained status 和库存快照结构。"
+	/>
+	<LinkCard
+		title="远程维护"
+		href="/mqtt5/maintenance/"
+		description="远程诊断、禁售、开锁、升级命令和执行回执。"
+	/>
+	<LinkCard
+		title="可靠性"
+		href="/mqtt5/reliability/"
+		description="LWT、QoS、retained 消息、过期命令和幂等规则。"
+	/>
+</CardGrid>
 
-1. Client connects to the broker and authenticates.
-2. Client subscribes to a topic filter.
-3. Publisher sends a message to a topic.
-4. Broker delivers the message according to QoS and subscription rules.
+## 集成边界
 
-## Topic and delivery rules
-
-- Topics should be documented with clear naming conventions.
-- QoS values must be called out when a message depends on delivery guarantees.
-- Retained message behavior must be explicit when it matters to clients.
-
-## Success example
-
-```text
-topic: sensors/device-1/temp
-qos: 1
-payload: {"value":23.5,"unit":"C"}
-```
-
-## Failure example
-
-```text
-topic: sensors/#
-error: NOT_FOUND
-message: subscription target does not exist
-```
-
-## Troubleshooting
-
-- If messages do not arrive, confirm the subscription filter matches the published topic.
-- If delivery guarantees matter, verify the QoS described in the page.
-- If retained messages appear unexpectedly, check whether the retain flag is enabled.
-
-## Related sources
-
-- [Home](/)
+- MQTT5 承载设备监控与维护，不承载应用端订单状态同步。
+- 应用端实时同步使用 [WebSocket](/websocket/)。
+- 运营后台事件流使用 [SSE](/sse/)。

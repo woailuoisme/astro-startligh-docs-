@@ -1,0 +1,50 @@
+---
+title: 事件
+description: SSE 事件格式、事件类型和完整 stream 示例。
+sidebar:
+  order: 3
+---
+
+## 事件格式
+
+```text
+id: evt_01J4V8Q6YJJ1MB8Z4T9A0W7M0E
+event: cabinet.temperature_alert
+retry: 3000
+data: {"machine_id":"vm_shanghai_001","temperature_c":9.8,"threshold_c":8,"severity":"warning"}
+```
+
+`id` 全局唯一。客户端重连时通过 `Last-Event-ID` 恢复，服务端会从该事件之后继续发送。
+
+## 事件类型
+
+| 事件 | 严重级别 | 用途 |
+| --- | --- | --- |
+| `machine.status_changed` | `info` | 设备在线、离线、维护、暂停售卖状态变化。 |
+| `machine.offline` | `critical` | 设备超过心跳窗口未连接。 |
+| `cabinet.temperature_alert` | `warning` / `critical` | 冰柜温度超过配置阈值。 |
+| `inventory.low_stock` | `warning` | 某 SKU 或货道库存低于补货线。 |
+| `order.dispense_failed` | `critical` | 出餐失败，需要退款或人工处理。 |
+| `heating.failed` | `critical` | 微波炉加热失败或温度未达标。 |
+| `maintenance.command_completed` | `info` | 运维命令执行完成。 |
+| `replenishment.completed` | `info` | 补货任务完成并同步库存。 |
+| `door.forced_open` | `critical` | 维护门或取餐门异常打开。 |
+
+## 事件流示例
+
+```text
+: heartbeat
+
+id: evt_01J4V8Q6YJJ1MB8Z4T9A0W7M0E
+event: machine.status_changed
+retry: 3000
+data: {"machine_id":"vm_shanghai_001","from":"offline","to":"online","occurred_at":"2026-05-12T10:15:30Z"}
+
+id: evt_01J4V90KWF8Z47D5V7G3P6E8XR
+event: inventory.low_stock
+data: {"machine_id":"vm_shanghai_001","slot_id":"A03","meal_sku":"meal_beef_rice","remaining":2,"reorder_point":5}
+
+id: evt_01J4V9M6R4Y1FMG7D9KMZ0PXSB
+event: heating.failed
+data: {"machine_id":"vm_shanghai_001","order_id":"order_01J4V8WZ7C8QK6RXQS7DD6F4ZV","reason":"TARGET_TEMPERATURE_NOT_REACHED","severity":"critical"}
+```

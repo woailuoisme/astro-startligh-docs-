@@ -1,0 +1,34 @@
+---
+title: 可靠性
+description: MQTT5 LWT、QoS、retained 消息、过期命令和幂等规则。
+sidebar:
+  order: 6
+---
+
+## 遗嘱消息
+
+设备连接时必须设置 LWT：
+
+```text
+topic: vm/{machineId}/status
+qos: 1
+retain: true
+payload: {"machine_id":"vm_shanghai_001","state":"offline","last_seen_at":"2026-05-12T10:16:00Z"}
+```
+
+## 投递规则
+
+- 遥测使用 QoS 0，允许丢弃，不允许阻塞设备控制流程。
+- 状态、库存、告警和维护命令使用 QoS 1。
+- `status` 和 `inventory` 使用 retained，其它 topic 不使用 retained。
+- 维护命令必须设置过期时间，设备不得执行过期命令。
+- 设备重复收到相同 `command_id` 时，必须返回上一次执行结果。
+
+## 离线恢复
+
+设备离线后重新连接时必须按顺序执行：
+
+1. 发布 retained `status`。
+2. 发布 retained `inventory`。
+3. 上报本地缓存的未确认告警。
+4. 拉取未过期维护命令并按 `command_id` 去重执行。

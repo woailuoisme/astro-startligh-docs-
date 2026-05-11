@@ -1,0 +1,41 @@
+---
+title: 连接
+description: MQTT5 broker、mTLS、Client ID、会话和证书绑定规则。
+sidebar:
+  order: 2
+---
+
+## 连接
+
+| 配置项 | 值 |
+| --- | --- |
+| Broker | `mqtts://mqtt.vending.example.com:8883` |
+| Protocol | MQTT 5.0 |
+| Client ID | `vm:{machineId}` |
+| 认证方式 | 设备 mTLS 证书 |
+| Keep alive | 60 seconds |
+| Clean start | `false` |
+| Session expiry | 24 hours |
+
+设备证书必须绑定 `machineId`。平台会拒绝证书主体与 Client ID 不一致的连接。
+
+## 客户端 ID
+
+```text
+vm:{machineId}
+```
+
+Example:
+
+```text
+vm:vm_shanghai_001
+```
+
+同一 `machineId` 只能有一个在线连接。新连接建立后，broker 会踢掉旧连接，并记录 `DUPLICATE_CLIENT_ID` 运维事件。
+
+## 会话策略
+
+- `Clean Start` 固定为 `false`，避免短暂网络抖动导致维护命令丢失。
+- `Session Expiry Interval` 固定为 24 小时。
+- 设备恢复连接后必须立即发布 retained `status` 和 `inventory`。
+- 证书吊销后，设备不得继续连接 broker。

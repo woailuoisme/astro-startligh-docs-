@@ -2,18 +2,13 @@
 const links = [
 	{
 		href: "/",
-		label: "Home",
+		label: "首页",
 		current: (pathname: string) => pathname === "/",
 	},
 	{
 		href: "/mqtt5/",
 		label: "MQTT 5",
 		current: (pathname: string) => pathname.startsWith("/mqtt5"),
-	},
-	{
-		href: "/rest/operations/tags/channels/",
-		label: "REST API",
-		current: (pathname: string) => pathname.startsWith("/rest"),
 	},
 	{
 		href: "/sse/",
@@ -30,7 +25,7 @@ const links = [
 const pathname = Astro.url.pathname;
 ---
 
-<nav class="top-nav" aria-label="Primary">
+<nav class="top-nav" aria-label="主导航">
 	{
 		links.map(({ href, label, current }) => (
 			<a href={href} aria-current={current(pathname) ? "page" : undefined}>

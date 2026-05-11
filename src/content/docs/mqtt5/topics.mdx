@@ -1,0 +1,46 @@
+---
+title: 主题约定
+description: MQTT5 topic 命名、方向、QoS 和 retained 策略。
+sidebar:
+  order: 3
+---
+
+## 主题约定
+
+| 主题 | 方向 | QoS | 保留消息 | 用途 |
+| --- | --- | --- | --- | --- |
+| `vm/{machineId}/telemetry` | 设备到云端 | 0 | 否 | 高频遥测，例如温度、电压、网络质量。 |
+| `vm/{machineId}/status` | 设备到云端 | 1 | 是 | 设备当前可售、离线、维护、故障状态。 |
+| `vm/{machineId}/inventory` | 设备到云端 | 1 | 是 | 货道库存快照。 |
+| `vm/{machineId}/alerts` | 设备到云端 | 1 | 否 | 温度异常、门锁异常、微波炉故障等告警。 |
+| `vm/{machineId}/maintenance/commands` | 云端到设备 | 1 | 否 | 运维命令下发。 |
+| `vm/{machineId}/maintenance/replies` | 设备到云端 | 1 | 否 | 运维命令执行结果。 |
+
+## 命名规则
+
+- Topic 必须以 `vm/{machineId}` 开头。
+- `machineId` 必须与 mTLS 证书主体匹配。
+- 设备不得发布其它设备的 topic。
+- 平台不得把订单支付详情写入 MQTT topic；设备只接收维护命令。
+
+## 告警主题示例
+
+```text
+topic: vm/vm_shanghai_001/alerts
+qos: 1
+retain: false
+```
+
+```json
+{
+	"event_id": "evt_01J4V8Q6YJJ1MB8Z4T9A0W7M0E",
+	"machine_id": "vm_shanghai_001",
+	"type": "cabinet.temperature_high",
+	"severity": "warning",
+	"occurred_at": "2026-05-12T10:15:30Z",
+	"payload": {
+		"temperature_c": 9.8,
+		"threshold_c": 8
+	}
+}
+```

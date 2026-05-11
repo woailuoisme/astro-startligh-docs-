@@ -1,0 +1,24 @@
+---
+title: 端点
+description: 运营事件流地址、鉴权请求头和过滤参数。
+sidebar:
+  order: 2
+---
+
+## 端点
+
+```http
+GET https://api.vending.example.com/v1/events/operations
+Authorization: Bearer admin_jwt
+Accept: text/event-stream
+Last-Event-ID: evt_01J4V8Q6YJJ1MB8Z4T9A0W7M0E
+```
+
+支持的查询参数：
+
+| 参数 | 说明 |
+| --- | --- |
+| `machine_id` | 只接收指定设备事件。 |
+| `city` | 只接收指定城市事件。 |
+| `severity` | `info`, `warning`, `critical`。 |
+| `event_types` | 逗号分隔的事件名列表。 |

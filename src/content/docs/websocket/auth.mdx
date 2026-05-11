@@ -1,0 +1,56 @@
+---
+title: 鉴权
+description: 私有频道鉴权、订阅请求和订阅成功事件。
+sidebar:
+  order: 3
+---
+
+## 私有频道鉴权
+
+私有频道订阅前，客户端调用鉴权接口：
+
+```http
+POST https://api.vending.example.com/v1/realtime/auth
+Authorization: Bearer app_user_jwt
+Content-Type: application/json
+```
+
+```json
+{
+	"socket_id": "948832.123456",
+	"channel_name": "private-order.order_01J4V8WZ7C8QK6RXQS7DD6F4ZV"
+}
+```
+
+响应：
+
+```json
+{
+	"auth": "app_key:2c5f5d4f7a...",
+	"channel_data": "{\"user_id\":\"usr_01J4V6\",\"user_info\":{\"name\":\"mobile-app\"}}"
+}
+```
+
+## 订阅
+
+客户端发送订阅消息：
+
+```json
+{
+	"event": "pusher:subscribe",
+	"data": {
+		"channel": "private-order.order_01J4V8WZ7C8QK6RXQS7DD6F4ZV",
+		"auth": "app_key:2c5f5d4f7a..."
+	}
+}
+```
+
+订阅成功：
+
+```json
+{
+	"event": "pusher_internal:subscription_succeeded",
+	"channel": "private-order.order_01J4V8WZ7C8QK6RXQS7DD6F4ZV",
+	"data": "{}"
+}
+```
