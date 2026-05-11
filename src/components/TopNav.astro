@@ -1,0 +1,77 @@
+---
+const links = [
+	{
+		href: "/",
+		label: "Home",
+		current: (pathname: string) => pathname === "/",
+	},
+	{
+		href: "/mqtt5/",
+		label: "MQTT 5",
+		current: (pathname: string) => pathname.startsWith("/mqtt5"),
+	},
+	{
+		href: "/rest/operations/tags/channels/",
+		label: "REST API",
+		current: (pathname: string) => pathname.startsWith("/rest"),
+	},
+	{
+		href: "/sse/",
+		label: "SSE",
+		current: (pathname: string) => pathname.startsWith("/sse"),
+	},
+	{
+		href: "/websocket/",
+		label: "WebSocket",
+		current: (pathname: string) => pathname.startsWith("/websocket"),
+	},
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<nav class="top-nav" aria-label="Primary">
+	{
+		links.map(({ href, label, current }) => (
+			<a href={href} aria-current={current(pathname) ? "page" : undefined}>
+				{label}
+			</a>
+		))
+	}
+</nav>
+
+<style>
+	@layer starlight.components {
+		.top-nav {
+			display: none;
+			align-items: center;
+			justify-content: center;
+			gap: 0.25rem;
+		}
+
+		a {
+			border-radius: 0.5rem;
+			color: var(--sl-color-gray-2);
+			font-size: var(--sl-text-base);
+			font-weight: 500;
+			padding: 0.5rem 0.75rem;
+			text-decoration: none;
+		}
+
+		a:hover,
+		a:focus-visible,
+		a[aria-current="page"] {
+			color: var(--sl-color-white);
+		}
+
+		a[aria-current="page"] {
+			background-color: var(--sl-color-gray-6);
+		}
+
+		@media (min-width: 50rem) {
+			.top-nav {
+				display: flex;
+			}
+		}
+	}
+</style>

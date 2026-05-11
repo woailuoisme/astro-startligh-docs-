@@ -1,0 +1,5 @@
+{
+	"$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
+	"ignoreFiles": ["src/styles/global.css"],
+	"ignoreDependencies": ["@astrojs/mdx", "tailwindcss"]
+}

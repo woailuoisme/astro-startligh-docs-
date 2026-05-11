@@ -1,0 +1,53 @@
+---
+title: SSE
+description: Server-sent events contract, lifecycle, examples, and troubleshooting.
+---
+
+## Overview
+
+Server-sent events are used for one-way, server-initiated delivery where clients keep a long-lived HTTP connection open to receive updates.
+
+## Version and compatibility
+
+- Current version: 2.1.0
+- Authentication and error semantics are documented in this protocol contract.
+
+## Lifecycle
+
+1. Client opens a long-lived event stream.
+2. Server accepts the connection and begins sending events.
+3. Client receives named events with payload data.
+4. Either side can end the stream, and the docs should explain the recovery path.
+
+## Event format
+
+```text
+event: alert.warning
+id: evt_01HX
+data: {"level":"warn","message":"Temperature above threshold"}
+```
+
+## Success example
+
+```text
+event: device.online
+id: evt_01HY
+data: {"deviceId":"dev_42","status":"online"}
+```
+
+## Failure example
+
+```text
+event: error
+data: {"code":401,"error":"UNAUTHORIZED","message":"Token invalid or expired"}
+```
+
+## Troubleshooting
+
+- If the stream closes immediately, check authentication and target availability.
+- If events are missing, confirm the event name and stream name match the published contract.
+- If payload parsing fails, verify the JSON structure is valid and complete.
+
+## Related sources
+
+- [Home](/)

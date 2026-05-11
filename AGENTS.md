@@ -26,7 +26,7 @@ This is an Astro + Starlight documentation site.
 - Use tabs for indentation.
 - Use double quotes in JavaScript, TypeScript, and config files.
 - Prefer small, focused Markdown/MDX files under `src/content/docs/`.
-- Name docs files by topic, for example `guides/example.md` or `reference/example.md`.
+- Name docs files by protocol or topic, for example `sse/index.mdx` or `websocket/index.mdx`.
 - Use Biome for formatting and import organization; do not hand-format against the configured rules.
 
 ## Testing Guidelines
@@ -55,8 +55,13 @@ For pull requests, include:
 - Keep changes scoped to the docs site; avoid introducing extra tooling unless it is needed.
 - Prefer editing content under `src/content/docs/` and shared styles only when required.
 - Update `AGENTS.md` when project commands, structure, or workflow change.
+- When verifying documentation or framework behavior, prefer MCP doc sources in this order: `context7` first, then `exa`, `tavily`, and `fetch`.
+- Use official docs, upstream READMEs, and source files as the source of truth whenever possible.
+- When you quote or reference docs, keep the excerpt short and include links; prefer line-level references when the source exposes them.
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
+shell commands, and other important information, read `specs/001-api-protocol-docs/plan.md`
 <!-- SPECKIT END -->
+
+@RTK.md

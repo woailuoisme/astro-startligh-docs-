@@ -1,40 +1,64 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
-template: splash # Remove or comment out this line to display the site sidebar on this page.
+title: Realtime API Protocol Docs
+description: Contract-first entry point for REST API, SSE, WebSocket, and MQTT5 documentation.
+template: splash
+tableOfContents: false
 hero:
-  tagline: Congrats on setting up a new Starlight project!
-  image:
-    file: ../../assets/houston.webp
+  tagline: A compact protocol documentation portal for REST, SSE, WebSocket, and MQTT5 integrations.
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: REST API
+      link: /rest/operations/tags/channels/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+    - text: SSE
+      link: /sse/
+      variant: secondary
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Aside, Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-## Next steps
+## Start Here
 
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+<CardGrid>
+	<LinkCard
+		title="REST API"
+		href="/rest/operations/tags/channels/"
+		description="Browse generated OpenAPI operation pages."
+	/>
+	<LinkCard
+		title="SSE"
+		href="/sse/"
+		description="Review server-sent event lifecycle and payloads."
+	/>
+	<LinkCard
+		title="WebSocket"
+		href="/websocket/"
+		description="Read the bidirectional realtime message contract."
+	/>
+	<LinkCard
+		title="MQTT5"
+		href="/mqtt5/"
+		description="Check topic naming, QoS, and subscription behavior."
+	/>
+</CardGrid>
+
+## Why This Portal
+
+<CardGrid>
+	<Card title="Focused" icon="open-book">
+		Only the protocol entry points needed to integrate with the realtime API.
 	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
+	<Card title="Contract-first" icon="document">
+		Each page explains request shape, lifecycle, success cases, and failures.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Generated REST" icon="setting">
+		REST pages are generated from `src/spec/openapi.yaml`.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="Ready to validate" icon="approve-check-circle">
+		Use `pnpm check` and `pnpm build` before shipping documentation changes.
 	</Card>
 </CardGrid>
+
+<Aside type="tip" title="Recommended path">
+	Start with REST API for resource contracts, then open SSE, WebSocket, or MQTT5
+	based on the realtime delivery model you need.
+</Aside>

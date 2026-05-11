@@ -9,15 +9,12 @@ import { defineConfig } from "astro/config";
 import compress from "astro-compress";
 import icon from "astro-icon";
 import mermaid from "astro-mermaid";
-import starlightCodeblockFullscreen from "starlight-codeblock-fullscreen";
 import starlightGithubAlerts from "starlight-github-alerts";
 import starlightHeadingBadges from "starlight-heading-badges";
 import starlightImageZoom from "starlight-image-zoom";
 import starlightLinksValidator from "starlight-links-validator";
-import starlightLlmsTxt from "starlight-llms-txt";
 import starlightOpenAPI, { openAPISidebarGroups } from "starlight-openapi";
 import starlightScrollToTop from "starlight-scroll-to-top";
-import starlightSidebarTopics from "starlight-sidebar-topics";
 import starlightTelescope from "starlight-telescope";
 
 export default defineConfig({
@@ -37,7 +34,8 @@ export default defineConfig({
 			},
 		}),
 		starlight({
-			title: "RealtimeAPI Docs",
+			title: "RealtimeAPI",
+			pagefind: false,
 			social: [
 				{
 					icon: "github",
@@ -51,8 +49,8 @@ export default defineConfig({
 				useStarlightDarkModeSwitch: true,
 				useStarlightUiThemeColors: true,
 				plugins: [
-					pluginCollapsibleSections(), // 代码块可折叠区段
 					pluginLineNumbers(), // 显示行号
+					pluginCollapsibleSections(), // 代码块可折叠区段
 				],
 				styleOverrides: {
 					borderRadius: "6px",
@@ -60,6 +58,11 @@ export default defineConfig({
 				},
 			},
 			plugins: [
+				starlightTelescope(),
+				starlightImageZoom(), // 图片点击放大
+				starlightGithubAlerts(), // GitHub 风格告警块
+				starlightScrollToTop(), // 回到顶部按钮
+				starlightHeadingBadges(), // 标题内嵌 badge
 				// REST API — OpenAPI 规范自动生成文档页
 				starlightOpenAPI([
 					{
@@ -69,47 +72,36 @@ export default defineConfig({
 						collapsed: false,
 					},
 				]),
-				// 四协议独立侧边栏分区
-				starlightSidebarTopics([
-					{
-						label: "WebSocket",
-						link: "/websocket/",
-						icon: "seti:html",
-						items: [{ autogenerate: { directory: "websocket" } }],
-					},
-					{
-						label: "MQTT 5",
-						link: "/mqtt5/",
-						icon: "seti:json",
-						items: [{ autogenerate: { directory: "mqtt5" } }],
-					},
-					{
-						label: "SSE",
-						link: "/sse/",
-						icon: "seti:pipeline",
-						items: [{ autogenerate: { directory: "sse" } }],
-					},
-					{
-						label: "REST API",
-						link: "/rest/",
-						icon: "seti:db",
-						items: [...openAPISidebarGroups], // 接 OpenAPI 插件生成的侧边栏
-					},
-				]),
-				starlightTelescope(), // 模糊搜索快速跳转
-				starlightLinksValidator(), // 构建时死链检测
-				starlightLlmsTxt(), // 生成 /llms.txt AI 索引
-				starlightImageZoom(), // 图片点击放大
-				starlightCodeblockFullscreen(), // 代码块全屏按钮
-				starlightGithubAlerts(), // GitHub 风格告警块
-				starlightScrollToTop(), // 回到顶部按钮
-				starlightHeadingBadges(), // 标题内嵌 badge
+				starlightLinksValidator({
+					exclude: ["/rest", "/rest/**"],
+				}), // OpenAPI 生成路由由插件产出，跳过其链接校验
 			],
-			// 自定义组件（header 下拉导航）
 			components: {
-				Header: "./src/components/Header.astro",
+				Search: "./src/components/TopNav.astro",
+				Sidebar: "./src/components/Sidebar.astro",
 			},
-			customCss: ["./src/styles/custom.css"],
+			sidebar: [
+				{
+					label: "REST API",
+					collapsed: false,
+					items: [...openAPISidebarGroups],
+				},
+				{
+					label: "SSE",
+					collapsed: false,
+					items: [{ autogenerate: { directory: "sse" } }],
+				},
+				{
+					label: "WebSocket",
+					collapsed: false,
+					items: [{ autogenerate: { directory: "websocket" } }],
+				},
+				{
+					label: "MQTT 5",
+					collapsed: false,
+					items: [{ autogenerate: { directory: "mqtt5" } }],
+				},
+			],
 		}),
 		sitemap(),
 		react(),

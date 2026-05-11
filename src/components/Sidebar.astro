@@ -1,0 +1,34 @@
+---
+import MobileMenuFooter from "@astrojs/starlight/components/MobileMenuFooter.astro";
+import SidebarPersister from "@astrojs/starlight/components/SidebarPersister.astro";
+import SidebarSublist from "@astrojs/starlight/components/SidebarSublist.astro";
+import type { StarlightRouteData } from "@astrojs/starlight/route-data";
+
+const { sidebar } = (Astro.locals as { starlightRoute: StarlightRouteData })
+	.starlightRoute;
+const pathname = Astro.url.pathname;
+
+let filteredSidebar = sidebar;
+
+if (pathname === "/") {
+	filteredSidebar = [];
+} else if (pathname.startsWith("/mqtt5")) {
+	filteredSidebar = sidebar.filter((entry) => entry.label === "MQTT 5");
+} else if (pathname.startsWith("/rest")) {
+	filteredSidebar = sidebar.filter((entry) => entry.label === "REST API");
+} else if (pathname.startsWith("/sse")) {
+	filteredSidebar = sidebar.filter((entry) => entry.label === "SSE");
+} else if (pathname.startsWith("/websocket")) {
+	filteredSidebar = sidebar.filter((entry) => entry.label === "WebSocket");
+} else {
+	filteredSidebar = sidebar;
+}
+---
+
+<SidebarPersister>
+	<SidebarSublist sublist={filteredSidebar} />
+</SidebarPersister>
+
+<div class="md:sl-hidden">
+	<MobileMenuFooter />
+</div>

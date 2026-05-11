@@ -1,0 +1,52 @@
+---
+title: MQTT5
+description: Topic-based publish and subscribe contract, QoS rules, examples, and troubleshooting.
+---
+
+## Overview
+
+MQTT5 is used for topic-based publish/subscribe delivery where clients connect to a broker and exchange messages through topics.
+
+## Version and compatibility
+
+- Current version: 2.1.0
+- Authentication and error semantics are documented in this protocol contract.
+
+## Lifecycle
+
+1. Client connects to the broker and authenticates.
+2. Client subscribes to a topic filter.
+3. Publisher sends a message to a topic.
+4. Broker delivers the message according to QoS and subscription rules.
+
+## Topic and delivery rules
+
+- Topics should be documented with clear naming conventions.
+- QoS values must be called out when a message depends on delivery guarantees.
+- Retained message behavior must be explicit when it matters to clients.
+
+## Success example
+
+```text
+topic: sensors/device-1/temp
+qos: 1
+payload: {"value":23.5,"unit":"C"}
+```
+
+## Failure example
+
+```text
+topic: sensors/#
+error: NOT_FOUND
+message: subscription target does not exist
+```
+
+## Troubleshooting
+
+- If messages do not arrive, confirm the subscription filter matches the published topic.
+- If delivery guarantees matter, verify the QoS described in the page.
+- If retained messages appear unexpectedly, check whether the retain flag is enabled.
+
+## Related sources
+
+- [Home](/)

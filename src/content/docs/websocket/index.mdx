@@ -1,0 +1,67 @@
+---
+title: WebSocket
+description: Bidirectional real-time contract, handshake flow, examples, and troubleshooting.
+---
+
+## Overview
+
+WebSocket is used for bidirectional, low-latency communication where clients can send and receive events on the same connection.
+
+## Version and compatibility
+
+- Current version: 2.1.0
+- Authentication and error semantics are documented in this protocol contract.
+
+## Lifecycle
+
+1. Client opens the connection and authenticates during the handshake.
+2. Server accepts the session and assigns it to a channel or conversation.
+3. Client sends events or commands.
+4. Server sends responses, broadcasts, or close signals.
+
+## Message envelope
+
+```json
+{
+  "event": "chat.message",
+  "payload": {
+    "text": "Hello world",
+    "userId": "u_123"
+  }
+}
+```
+
+## Success example
+
+```json
+{
+  "event": "room.joined",
+  "payload": {
+    "roomId": "room_42",
+    "memberCount": 8
+  }
+}
+```
+
+## Failure example
+
+```json
+{
+  "event": "error",
+  "payload": {
+    "code": 400,
+    "error": "BAD_REQUEST",
+    "message": "event is required"
+  }
+}
+```
+
+## Troubleshooting
+
+- If the connection closes during handshake, check the token and handshake headers.
+- If messages are not delivered, confirm the event name and target channel are correct.
+- If the server closes the session, inspect the close code and reason in the protocol docs.
+
+## Related sources
+
+- [Home](/)
