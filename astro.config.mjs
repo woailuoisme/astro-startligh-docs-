@@ -23,26 +23,21 @@ import starlightTelescope from "starlight-telescope";
 export default defineConfig({
 	site: "https://your-docs.com", // ← 改成你的域名，sitemap 必需
 	output: "server",
-
 	adapter: node({
 		mode: "standalone",
 	}),
-
 	integrations: [
 		// ⚠️ mermaid 必须在 starlight 之前
 		mermaid({
 			autoTheme: true, // 跟随暗/亮模式自动切换
 		}),
-
 		icon({
 			include: {
 				tabler: ["*"], // Tabler 图标库
 			},
 		}),
-
 		starlight({
 			title: "RealtimeAPI Docs",
-
 			social: [
 				{
 					icon: "github",
@@ -50,7 +45,6 @@ export default defineConfig({
 					href: "https://github.com/your-org/your-repo",
 				},
 			],
-
 			// Expressive Code 代码块配置（Starlight 内置，无需单独安装）
 			expressiveCode: {
 				themes: ["starlight-dark", "starlight-light"],
@@ -65,7 +59,6 @@ export default defineConfig({
 					codePaddingInline: "1rem",
 				},
 			},
-
 			plugins: [
 				// REST API — OpenAPI 规范自动生成文档页
 				starlightOpenAPI([
@@ -76,7 +69,6 @@ export default defineConfig({
 						collapsed: false,
 					},
 				]),
-
 				// 四协议独立侧边栏分区
 				starlightSidebarTopics([
 					{
@@ -104,7 +96,6 @@ export default defineConfig({
 						items: [...openAPISidebarGroups], // 接 OpenAPI 插件生成的侧边栏
 					},
 				]),
-
 				starlightTelescope(), // 模糊搜索快速跳转
 				starlightLinksValidator(), // 构建时死链检测
 				starlightLlmsTxt(), // 生成 /llms.txt AI 索引
@@ -114,15 +105,12 @@ export default defineConfig({
 				starlightScrollToTop(), // 回到顶部按钮
 				starlightHeadingBadges(), // 标题内嵌 badge
 			],
-
 			// 自定义组件（header 下拉导航）
 			components: {
 				Header: "./src/components/Header.astro",
 			},
-
 			customCss: ["./src/styles/custom.css"],
 		}),
-
 		sitemap(),
 		react(),
 		compress(), // 构建产物压缩，放最后

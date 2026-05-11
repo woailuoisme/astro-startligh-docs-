@@ -10,7 +10,7 @@
 		"astro": "astro",
 		"check": "astro check",
 		"lint": "biome check --write .",
-		"type": "tsc --noEmit"
+		"type": "tsc --noEmit "
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.9",
