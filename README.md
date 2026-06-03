@@ -3,7 +3,7 @@
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
 ```
-pnpm create astro@latest -- --template starlight
+bun create astro@latest --template starlight
 ```
 
 > 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
@@ -45,8 +45,8 @@ All commands are run from the root of the project, from a terminal:
 | `just preview`        | Previews your build locally, before deploying    |
 | `just check`          | Runs Astro framework checks                      |
 | `just verify`         | Runs lint, type, check, and build                |
-| `pnpm astro ...`      | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| `bun run astro -- ...` | Run CLI commands like `astro add`, `astro check` |
+| `bun run astro -- --help` | Get help using the Astro CLI                  |
 
 ## 👀 Want to learn more?
 

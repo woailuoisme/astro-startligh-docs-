@@ -2,8 +2,12 @@ pre-commit:
   parallel: true
   jobs:
     - name: biome
-      glob: "*.{astro,css,js,jsx,json,jsonc,md,mdx,mjs,ts,tsx}"
+      glob: "*.{css,js,jsx,json,jsonc,mjs,ts,tsx}"
       run: biome check --write {staged_files}
+
+    - name: prettier-content
+      glob: "*.{astro,md,mdx}"
+      run: prettier --write {staged_files}
 
 pre-push:
   jobs:

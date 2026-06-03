@@ -1,0 +1,15 @@
+.astro
+.cache
+.DS_Store
+.env
+.env.*
+.git
+.github
+.idea
+.specify
+.vscode
+dist
+node_modules
+npm-debug.log*
+bun-debug.log*
+*.local

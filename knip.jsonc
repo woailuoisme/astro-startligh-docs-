@@ -1,5 +1,19 @@
 {
 	"$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
-	"ignoreFiles": ["src/styles/global.css"],
-	"ignoreDependencies": ["@astrojs/mdx", "tailwindcss"]
+	"ignoreFiles": [
+		"src/styles/global.css",
+		"src/components/ui/**",
+		"src/lib/utils.ts"
+	],
+	"ignoreDependencies": [
+		"@fontsource-variable/geist",
+		"class-variance-authority",
+		"clsx",
+		"lucide-react",
+		"radix-ui",
+		"shadcn",
+		"tailwind-merge",
+		"tailwindcss",
+		"tw-animate-css"
+	]
 }

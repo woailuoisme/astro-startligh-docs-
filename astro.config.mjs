@@ -1,4 +1,3 @@
-import node from "@astrojs/node";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import starlight from "@astrojs/starlight";
@@ -18,10 +17,6 @@ import starlightTelescope from "starlight-telescope";
 
 export default defineConfig({
 	site: "https://your-docs.com", // ← 改成你的域名，sitemap 必需
-	output: "server",
-	adapter: node({
-		mode: "standalone",
-	}),
 	integrations: [
 		// ⚠️ mermaid 必须在 starlight 之前
 		mermaid({

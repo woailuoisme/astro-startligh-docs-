@@ -1,0 +1,4 @@
+*
+!src/content/docs/**/*.md
+!src/content/docs/**/*.mdx
+!src/components/**/*.astro

@@ -5,35 +5,40 @@ default:
 # Install project tools and dependencies.
 setup:
 	mise install
-	pnpm install
+	bun install --frozen-lockfile
 
 # Start the local development server.
 dev:
-	pnpm dev
+	bun run dev
 
 # Build the production site.
 build:
-	pnpm build
+	bun run build
 
 # Preview the production build locally.
 preview:
-	pnpm preview
+	bun run preview
 
 # Run Astro framework checks.
 check:
-	pnpm check
+	bun run check
 
 # Run Biome formatting and linting.
 lint:
-	pnpm lint
+	bun run lint
+
+# Format all supported project files.
+fmt:
+	bun run lint
+	bun run format:content
 
 # Run TypeScript type checking.
 type:
-	pnpm type
+	bun run type
 
 # Run Knip unused code/dependency checks.
 knip:
-	pnpm knip
+	bun run knip
 
 # Run the standard local verification suite.
 verify: lint type check build

@@ -18,13 +18,13 @@ This is an Astro + Starlight documentation site.
 - `just --list` lists the available task shortcuts.
 - `just dev` starts the local site at `http://localhost:4321`.
 - `just verify` runs the standard local verification suite.
-- `pnpm install` installs dependencies.
-- `pnpm dev` starts the local site at `http://localhost:4321`.
-- `pnpm build` creates the production output in `dist/`.
-- `pnpm preview` serves the built site locally.
-- `pnpm check` runs `astro check` for framework-level validation.
-- `pnpm lint` runs Biome formatting and linting.
-- `pnpm type` runs `tsc --noEmit` for type checking.
+- `bun install --frozen-lockfile` installs dependencies from `bun.lock`.
+- `bun run dev` starts the local site at `http://localhost:4321`.
+- `bun run build` creates the production output in `dist/`.
+- `bun run preview` serves the built site locally.
+- `bun run check` runs `astro check` for framework-level validation.
+- `bun run lint` runs Biome formatting and linting.
+- `bun run type` runs `tsc --noEmit` for type checking.
 
 ## Coding Style & Naming Conventions
 
@@ -42,12 +42,12 @@ There is no dedicated test suite in this repository. Use the validation commands
 
 Or run the equivalent underlying commands:
 
-- `pnpm lint`
-- `pnpm type`
-- `pnpm check`
-- `pnpm build`
+- `bun run lint`
+- `bun run type`
+- `bun run check`
+- `bun run build`
 
-If you change docs rendering or layout, also verify the result in `pnpm dev`.
+If you change docs rendering or layout, also verify the result in `bun run dev`.
 
 ## Commit & Pull Request Guidelines
 
