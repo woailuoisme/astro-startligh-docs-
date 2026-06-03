@@ -13,6 +13,11 @@ This is an Astro + Starlight documentation site.
 
 ## Build, Test, and Development Commands
 
+- `mise install` installs the pinned local toolchain from `.mise.toml`.
+- `just setup` installs the pinned toolchain and project dependencies.
+- `just --list` lists the available task shortcuts.
+- `just dev` starts the local site at `http://localhost:4321`.
+- `just verify` runs the standard local verification suite.
 - `pnpm install` installs dependencies.
 - `pnpm dev` starts the local site at `http://localhost:4321`.
 - `pnpm build` creates the production output in `dist/`.
@@ -33,8 +38,13 @@ This is an Astro + Starlight documentation site.
 
 There is no dedicated test suite in this repository. Use the validation commands above before opening a PR:
 
+- `just verify`
+
+Or run the equivalent underlying commands:
+
 - `pnpm lint`
 - `pnpm type`
+- `pnpm check`
 - `pnpm build`
 
 If you change docs rendering or layout, also verify the result in `pnpm dev`.

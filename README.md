@@ -35,13 +35,17 @@ Static assets, like favicons, can be placed in the `public/` directory.
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| Command               | Action                                           |
+| :-------------------- | :----------------------------------------------- |
+| `mise install`        | Installs the pinned local toolchain              |
+| `just setup`          | Installs tools and dependencies                  |
+| `just --list`         | Lists available task shortcuts                   |
+| `just dev`            | Starts local dev server at `localhost:4321`      |
+| `just build`          | Builds your production site to `./dist/`         |
+| `just preview`        | Previews your build locally, before deploying    |
+| `just check`          | Runs Astro framework checks                      |
+| `just verify`         | Runs lint, type, check, and build                |
+| `pnpm astro ...`      | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
 ## 👀 Want to learn more?
