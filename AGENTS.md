@@ -10,6 +10,7 @@ This is an Astro + Starlight documentation site.
 - `public/` is for static files such as `favicon.svg`.
 - `src/styles/global.css` contains global styling.
 - `astro.config.mjs` and `tsconfig.json` hold project-wide build and TypeScript settings.
+- `.env.example` documents optional public build-time variables such as Cloudflare Web Analytics.
 
 ## Build, Test, and Development Commands
 
@@ -22,8 +23,12 @@ This is an Astro + Starlight documentation site.
 - `bun run dev` starts the local site at `http://localhost:4321`.
 - `bun run build` creates the production output in `dist/`.
 - `bun run preview` serves the built site locally.
+- `just preview-cloudflare` previews the built site with Cloudflare Pages.
+- `just deploy-cf` deploys `dist/` to Cloudflare Pages project `vending-docs`.
 - `bun run check` runs `astro check` for framework-level validation.
 - `bun run lint` runs Biome formatting and linting.
+- `just mdlint` runs Markdown and MDX lint checks.
+- `just fmt` runs Biome, Prettier, and markdownlint auto-fixes.
 - `bun run type` runs `tsc --noEmit` for type checking.
 
 ## Coding Style & Naming Conventions
@@ -43,6 +48,7 @@ There is no dedicated test suite in this repository. Use the validation commands
 Or run the equivalent underlying commands:
 
 - `bun run lint`
+- `just mdlint`
 - `bun run type`
 - `bun run check`
 - `bun run build`

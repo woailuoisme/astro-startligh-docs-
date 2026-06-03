@@ -6,7 +6,23 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": true,
+		"includes": [
+			"*.{css,js,jsx,json,jsonc,mjs,ts,tsx}",
+			".*.{json,jsonc}",
+			"src/**/*.{css,js,jsx,json,jsonc,mjs,ts,tsx}",
+			"!**/node_modules",
+			"!dist",
+			"!.astro",
+			"!.agents",
+			"!.code-review-graph",
+			"!.github",
+			"!.idea",
+			"!.specify",
+			"!.vscode",
+			"!src/components/**/*.astro",
+			"!src/content/docs"
+		]
 	},
 	"formatter": {
 		"enabled": true,
@@ -28,19 +44,6 @@
 			"recommended": true
 		}
 	},
-	"overrides": [
-		{
-			"includes": ["src/components/**/*.astro"],
-			"linter": {
-				"rules": {
-					"correctness": {
-						"noUnusedVariables": "off",
-						"noUnusedImports": "off"
-					}
-				}
-			}
-		}
-	],
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double"

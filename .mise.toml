@@ -1,4 +1,11 @@
 [tools]
 node = "24"
-bun = "1.3.14"
-just = "1.51.0"
+bun = "latest"
+just = "latest"
+wrangler = "latest"
+markdownlint-cli2 = "latest"
+biome = "latest"
+lefthook = "latest"
+"npm:knip" = "latest"
+prettier = "latest"
+

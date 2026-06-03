@@ -1,5 +1,4 @@
 import react from "@astrojs/react";
-import sitemap from "@astrojs/sitemap";
 import starlight from "@astrojs/starlight";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -13,10 +12,11 @@ import starlightHeadingBadges from "starlight-heading-badges";
 import starlightImageZoom from "starlight-image-zoom";
 import starlightLinksValidator from "starlight-links-validator";
 import starlightScrollToTop from "starlight-scroll-to-top";
-import starlightTelescope from "starlight-telescope";
+
+const cloudflareWebAnalyticsToken =
+	process.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
 
 export default defineConfig({
-	site: "https://your-docs.com", // ← 改成你的域名，sitemap 必需
 	integrations: [
 		// ⚠️ mermaid 必须在 starlight 之前
 		mermaid({
@@ -29,7 +29,21 @@ export default defineConfig({
 		}),
 		starlight({
 			title: "VendingAPI",
-			pagefind: false,
+			head: cloudflareWebAnalyticsToken
+				? [
+						{
+							tag: "script",
+							attrs: {
+								defer: true,
+								src: "https://static.cloudflareinsights.com/beacon.min.js",
+								"data-cf-beacon": JSON.stringify({
+									token: cloudflareWebAnalyticsToken,
+								}),
+							},
+						},
+					]
+				: [],
+
 			social: [
 				{
 					icon: "github",
@@ -52,7 +66,6 @@ export default defineConfig({
 				},
 			},
 			plugins: [
-				starlightTelescope(),
 				starlightImageZoom(), // 图片点击放大
 				starlightGithubAlerts(), // GitHub 风格告警块
 				starlightScrollToTop(), // 回到顶部按钮
@@ -81,7 +94,6 @@ export default defineConfig({
 				},
 			],
 		}),
-		sitemap(),
 		react(),
 		compress(), // 构建产物压缩，放最后
 	],

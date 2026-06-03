@@ -19,6 +19,14 @@ build:
 preview:
 	bun run preview
 
+# Preview the Cloudflare Pages build locally.
+preview-cloudflare: build
+	wrangler pages dev ./dist
+
+# Deploy the static site to Cloudflare Pages.
+deploy-cf: build
+	wrangler pages deploy ./dist --project-name vending-docs
+
 # Run Astro framework checks.
 check:
 	bun run check
@@ -27,10 +35,15 @@ check:
 lint:
 	bun run lint
 
+# Run Markdown lint checks.
+mdlint:
+	markdownlint-cli2 --fix
+
 # Format all supported project files.
 fmt:
 	bun run lint
 	bun run format:content
+	markdownlint-cli2 --fix
 
 # Run TypeScript type checking.
 type:
