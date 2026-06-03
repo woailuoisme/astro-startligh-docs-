@@ -6,7 +6,7 @@ on:
       tag:
         description: Docker image tag
         required: true
-        default: alpine
+        default: docs-alpine
         type: string
 
 permissions:
@@ -36,6 +36,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: jiaoio/astro-startligh-docs:${{ inputs.tag }}
+          tags: jiaoio/astro:${{ inputs.tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

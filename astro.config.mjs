@@ -24,7 +24,7 @@ export default defineConfig({
 		}),
 		icon({
 			include: {
-				tabler: ["*"], // Tabler 图标库
+				lucide: ["*"], // Lucide 图标库
 			},
 		}),
 		starlight({
@@ -76,6 +76,7 @@ export default defineConfig({
 				Search: "./src/components/TopNav.astro",
 				Sidebar: "./src/components/Sidebar.astro",
 			},
+			customCss: ["./src/styles/global.css"],
 			sidebar: [
 				{
 					label: "SSE",

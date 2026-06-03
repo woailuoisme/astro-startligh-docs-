@@ -1,4 +1,6 @@
 ---
+import DefaultSearch from "@astrojs/starlight/components/Search.astro";
+
 const links = [
 	{
 		href: "/",
@@ -25,48 +27,19 @@ const links = [
 const pathname = Astro.url.pathname;
 ---
 
-<nav class="top-nav" aria-label="主导航">
-	{
-		links.map(({ href, label, current }) => (
-			<a href={href} aria-current={current(pathname) ? "page" : undefined}>
-				{label}
-			</a>
-		))
-	}
-</nav>
-
-<style>
-	@layer starlight.components {
-		.top-nav {
-			display: none;
-			align-items: center;
-			justify-content: center;
-			gap: 0.25rem;
+<div class="flex items-center justify-end grow gap-4">
+	<nav class="hidden min-[50rem]:flex items-center justify-center gap-1" aria-label="主导航">
+		{
+			links.map(({ href, label, current }) => (
+				<a
+					href={href}
+					aria-current={current(pathname) ? "page" : undefined}
+					class="rounded-lg text-(--sl-color-gray-2) text-(length:--sl-text-base) font-medium px-3 py-2 no-underline hover:text-(--sl-color-white) focus-visible:text-(--sl-color-white) aria-[current=page]:text-(--sl-color-white) aria-[current=page]:bg-(--sl-color-gray-6)"
+				>
+					{label}
+				</a>
+			))
 		}
-
-		a {
-			border-radius: 0.5rem;
-			color: var(--sl-color-gray-2);
-			font-size: var(--sl-text-base);
-			font-weight: 500;
-			padding: 0.5rem 0.75rem;
-			text-decoration: none;
-		}
-
-		a:hover,
-		a:focus-visible,
-		a[aria-current="page"] {
-			color: var(--sl-color-white);
-		}
-
-		a[aria-current="page"] {
-			background-color: var(--sl-color-gray-6);
-		}
-
-		@media (min-width: 50rem) {
-			.top-nav {
-				display: flex;
-			}
-		}
-	}
-</style>
+	</nav>
+	<DefaultSearch {...Astro.props} />
+</div>
