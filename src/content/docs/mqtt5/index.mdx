@@ -12,6 +12,43 @@ import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
 MQTT5 用于设备侧长连接：自动售货机上报冰柜、货道、微波炉、门锁、控制板和网络状态；运营平台下发远程维护命令。订单创建、支付、出餐和加热任务由业务 HTTP 服务发起，MQTT5 只负责设备监控与维护通道。
 
+### 监控与维护架构示意图
+
+```mermaid
+graph TD
+    subgraph DeviceSide[设备侧]
+        Machine[自动售货机]
+    end
+
+    subgraph IoTLayer[IoT 接入层]
+        Broker[MQTT5 Broker mTLS]
+    end
+
+    subgraph BackendLayer[后端服务层]
+        IoTService[IoT 监控与维护服务]
+        OrderService[业务订单服务]
+    end
+
+    subgraph ControlSide[控制端]
+        Console[运营平台]
+        UserApp[应用端小程序]
+    end
+
+    %% 数据流
+    Machine -->|1. 上报遥测和告警| Broker
+    Broker -->|2. 转发遥测数据| IoTService
+    
+    Console -->|3. 发起维护指令| IoTService
+    IoTService -->|4. 下发控制命令| Broker
+    Broker -->|5. 传送命令| Machine
+    Machine -->|6. 执行并返回回执| Broker
+    Broker -->|7. 转发回执| IoTService
+    
+    %% 订单与支付边界
+    UserApp -->|A. 发起购买请求| OrderService
+    OrderService -->|B. 订单出餐与加热 HTTP| Machine
+```
+
 ## 章节
 
 <CardGrid>

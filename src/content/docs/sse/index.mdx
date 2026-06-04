@@ -14,6 +14,23 @@ SSE 用于运营后台、告警控制台和大屏监控。它是服务端到浏�
 
 设备不上行 SSE，应用端订单同步也不使用 SSE。设备使用 MQTT5，应用端使用 WebSocket。
 
+### 数据流向示意图
+
+```mermaid
+graph TD
+    subgraph DeviceComm[设备与后端通信]
+        Device[自动售货机与冰柜] -->|上报遥测和告警| MQTT[MQTT5 Broker]
+        MQTT -->|转发状态和事件| Backend[后端业务系统]
+    end
+
+    subgraph AdminConsole[运营管理端]
+        Backend -->|推送实时事件| SSE[SSE 网关]
+        SSE -->|单向持续事件流| Console[运营后台]
+        SSE -->|单向持续事件流| Alarm[告警控制台]
+        SSE -->|单向持续事件流| Screen[大屏监控]
+    end
+```
+
 ## 章节
 
 <CardGrid>

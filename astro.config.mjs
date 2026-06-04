@@ -7,6 +7,8 @@ import { defineConfig } from "astro/config";
 import compress from "astro-compress";
 import icon from "astro-icon";
 import mermaid from "astro-mermaid";
+import { pluginColorChips } from "expressive-code-color-chips";
+import ecTwoSlash from "expressive-code-twoslash";
 import starlightGithubAlerts from "starlight-github-alerts";
 import starlightHeadingBadges from "starlight-heading-badges";
 import starlightImageZoom from "starlight-image-zoom";
@@ -18,9 +20,12 @@ const cloudflareWebAnalyticsToken =
 
 export default defineConfig({
 	integrations: [
-		// ⚠️ mermaid 必须在 starlight 之前
+		// mermaid 必须在 starlight 之前
 		mermaid({
-			autoTheme: true, // 跟随暗/亮模式自动切换
+			autoTheme: true,
+			mermaidConfig: {
+				flowchart: { curve: "linear" },
+			},
 		}),
 		icon({
 			include: {
@@ -29,6 +34,7 @@ export default defineConfig({
 		}),
 		starlight({
 			title: "VendingAPI",
+			defaultLocale: "zh-CN",
 			head: cloudflareWebAnalyticsToken
 				? [
 						{
@@ -59,10 +65,12 @@ export default defineConfig({
 				plugins: [
 					pluginLineNumbers(), // 显示行号
 					pluginCollapsibleSections(), // 代码块可折叠区段
+					pluginColorChips(), // CSS 颜色代码预览色卡
+					ecTwoSlash(), // TypeScript 类型提示悬浮交互
 				],
 				styleOverrides: {
-					borderRadius: "6px",
-					codePaddingInline: "1rem",
+					borderRadius: "8px",
+					codeFontSize: "0.875rem",
 				},
 			},
 			plugins: [
@@ -70,7 +78,7 @@ export default defineConfig({
 				starlightGithubAlerts(), // GitHub 风格告警块
 				starlightScrollToTop(), // 回到顶部按钮
 				starlightHeadingBadges(), // 标题内嵌 badge
-				starlightLinksValidator(),
+				starlightLinksValidator(), // 构建时自动验证 Markdown 内部链接与锚点有效性
 			],
 			components: {
 				Search: "./src/components/TopNav.astro",
