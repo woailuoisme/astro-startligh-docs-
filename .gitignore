@@ -25,6 +25,7 @@ pnpm-debug.log*
 
 .agents
 .cluade
-.vscode
+# .vscode
 .specify
 specs
+.idea

@@ -1,0 +1,7 @@
+# Cloudflare Pages Redirects Rules
+# Docs: https://developers.cloudflare.com/pages/configuration/redirects/
+#
+# Syntax:
+# /old-path               /new-path               301
+# /docs/old-topic/*       /docs/new-topic/:splat  301
+# /external-link          https://example.com     302

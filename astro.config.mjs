@@ -101,5 +101,14 @@ export default defineConfig({
 
 	vite: {
 		plugins: [tailwindcss()],
+		build: {
+			chunkSizeWarningLimit: 1000,
+			rollupOptions: {
+				onwarn(warning, warn) {
+					if (warning.code === "EMPTY_BUNDLE") return;
+					warn(warning);
+				},
+			},
+		},
 	},
 });

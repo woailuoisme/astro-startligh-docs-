@@ -1,0 +1,18 @@
+# Cloudflare Pages Headers Rules
+# Docs: https://developers.cloudflare.com/pages/configuration/headers/
+#
+# Syntax:
+# /path-or-pattern
+#   header-name: header-value
+
+# Apply security headers to all paths
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-XSS-Protection: 1; mode=block
+  Permissions-Policy: geolocation=(), camera=(), microphone=()
+
+# Configure cache control for static assets (fonts, images, js/css from _astro)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
