@@ -9,49 +9,57 @@ setup:
 
 # Start the local development server.
 dev:
-	bun run dev
+	astro dev
 
 # Build the production site.
 build:
-	bun run build
+	astro build
 
 # Preview the production build locally.
 preview:
-	bun run preview
+	astro preview
+
+# Run Astro CLI subcommands.
+astro *args:
+	astro {{args}}
 
 # Preview the Cloudflare Pages build locally.
-preview-cloudflare: build
+cf: build
 	wrangler pages dev ./dist
 
 # Deploy the static site to Cloudflare Pages.
-deploy-cf: build
+deploy: build
 	wrangler pages deploy ./dist --project-name vending-docs
 
 # Run Astro framework checks.
 check:
-	bun run check
+	astro check
 
 # Run Biome formatting and linting.
 lint:
-	bun run lint
+	biome check --write .
 
 # Run Markdown lint checks.
-mdlint:
-	markdownlint-cli2 --fix
+md:
+	rumdl check .
 
 # Format all supported project files.
 fmt:
-	bun run lint
-	bun run format:content
-	markdownlint-cli2 --fix
+	biome check --write .
+	prettier --write "src/content/docs/**/*.{md,mdx}" "src/components/**/*.astro"
+	rumdl fmt .
+
+# Check content formatting.
+fmt-check:
+	prettier --check "src/content/docs/**/*.{md,mdx}" "src/components/**/*.astro"
 
 # Run TypeScript type checking.
 type:
-	bun run type
+	tsc --noEmit
 
 # Run Knip unused code/dependency checks.
-knip:
-	bun run knip
+unused:
+	knip
 
 # Run the standard local verification suite.
-verify: lint type check build
+verify: lint md type check build

@@ -27,5 +27,9 @@ pnpm-debug.log*
 .cluade
 # .vscode
 .specify
-specs
+spec
 .idea
+.code-review-graph
+.codegraph
+.wrangler
+.rumdl_cache

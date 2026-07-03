@@ -1,6 +1,5 @@
 services:
   docs:
-    image: jiaoio/astro-startligh-docs:alpine
     build:
       context: .
       dockerfile: Dockerfile

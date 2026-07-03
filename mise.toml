@@ -1,0 +1,20 @@
+[tools]
+# Runtimes
+node = "latest"
+bun = "latest"
+
+# Task & Automation
+just = "latest"
+lefthook = "latest"
+
+# Linters & Formatters
+biome = "latest"
+prettier = "latest"
+rumdl = "latest"
+
+# Deployment
+wrangler = "latest"
+
+# Static Analysis
+"npm:knip" = "latest"
+dprint = "latest"

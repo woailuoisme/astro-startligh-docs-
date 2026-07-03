@@ -1,0 +1,20 @@
+[global]
+# Disable specific rules globally
+disable = [
+  "MD010", # no-hard-tabs
+  "MD013", # line-length
+  "MD033", # no-inline-html
+  "MD041", # first-line-heading
+  "MD060"  # no-multiple-space-blockquote
+]
+
+# Respect .gitignore file
+respect-gitignore = true
+
+# Exclude directories
+exclude = [
+  "dist/",
+  "node_modules/",
+  ".astro/",
+  ".cache/"
+]
