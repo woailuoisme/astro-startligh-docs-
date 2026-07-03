@@ -81,3 +81,17 @@ shell commands, and other important information, read `specs/001-api-protocol-do
 <!-- SPECKIT END -->
 
 @RTK.md
+
+## Agent skills
+
+### Issue tracker
+
+Issues live as local Markdown files under `.scratch/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Uses the five default canonical role strings (needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo — one `CONTEXT.md` + `docs/adr/` at the root. See `docs/agents/domain.md`.

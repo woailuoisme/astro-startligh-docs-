@@ -1,10 +1,10 @@
+import { unified } from "@astrojs/markdown-remark";
 import react from "@astrojs/react";
 import starlight from "@astrojs/starlight";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
-import compress from "astro-compress";
 import icon from "astro-icon";
 import mermaid from "astro-mermaid";
 import { pluginColorChips } from "expressive-code-color-chips";
@@ -19,6 +19,10 @@ const cloudflareWebAnalyticsToken =
 	process.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
 
 export default defineConfig({
+	markdown: {
+		processor: unified(),
+	},
+
 	integrations: [
 		// mermaid 必须在 starlight 之前
 		mermaid({
@@ -104,7 +108,6 @@ export default defineConfig({
 			],
 		}),
 		react(),
-		compress(), // 构建产物压缩，放最后
 	],
 
 	vite: {

@@ -33,7 +33,7 @@ VendingAPI Docs is a static Astro + Starlight documentation site for product API
 | Runtime/package manager | Bun `1.3.14` |
 | Toolchain manager | mise |
 | Task runner | just |
-| Framework | Astro `6` |
+| Framework | Astro `7` |
 | Docs framework | Starlight |
 | UI islands | React |
 | Styling | Tailwind CSS `4` through Vite |
@@ -42,7 +42,6 @@ VendingAPI Docs is a static Astro + Starlight documentation site for product API
 | Formatting/linting | Biome, Prettier, markdownlint, `prettier-plugin-astro` |
 | Type checking | TypeScript, `astro check` |
 | Unused code checks | Knip |
-| Static compression | `astro-compress` |
 | Container runtime | Nginx Alpine |
 | Cloud deployment | Cloudflare Pages via Wrangler |
 | Docker registry | Docker Hub |
@@ -216,7 +215,6 @@ When adding protocol docs, keep files small and focused. Prefer topic-based page
 - Optional Cloudflare Web Analytics beacon injection.
 - React integration.
 - Tailwind CSS through Vite.
-- `astro-compress` as the final integration.
 
 Before production deployment, replace the placeholder site URL:
 
@@ -568,7 +566,7 @@ The Dockerfile already caches Bun package downloads with BuildKit:
 RUN --mount=type=cache,target=/root/.bun/install/cache bun install --frozen-lockfile
 ```
 
-Most remaining time is Astro/Vite static generation and compression. Repeated builds should reuse dependency layers unless `package.json` or `bun.lock` changes.
+Most remaining time is Astro/Vite static generation. Repeated builds should reuse dependency layers unless `package.json` or `bun.lock` changes.
 
 ### Container Starts but Healthcheck Fails Immediately
 
