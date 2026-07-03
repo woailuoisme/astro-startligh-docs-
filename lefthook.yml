@@ -3,14 +3,15 @@ pre-commit:
   jobs:
     - name: biome
       glob: "*.{css,js,jsx,json,jsonc,mjs,ts,tsx}"
-      run: biome check --write {staged_files}
+      run: biome check --write --no-errors-on-unmatched {staged_files}
 
     - name: prettier-content
       glob: "*.{astro,md,mdx}"
       run: prettier --write {staged_files}
 
-pre-push:
-  jobs:
     - name: tsc
       glob: "*.{ts,tsx,mts,cts}"
       run: tsc --noEmit
+
+    - name: astro-check
+      run: bun run astro check

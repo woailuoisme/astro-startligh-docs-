@@ -16,5 +16,4 @@ rumdl = "latest"
 wrangler = "latest"
 
 # Static Analysis
-"npm:knip" = "latest"
 dprint = "latest"
