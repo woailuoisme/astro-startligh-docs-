@@ -66,7 +66,7 @@ just build
 .
 ├── src/
 │   ├── content/docs/   # 文档内容文件（支持 Markdown/MDX，在此处添加 SSE/WS/MQTT 文档）
-│   ├── components/     # Astro 与 React UI 组件
+│   ├── components/     # Astro 与 Svelte UI 组件
 │   └── styles/         # 全局 CSS 样式
 ├── Dockerfile          # 基于 Nginx 的静态运行时 Docker 配置
 ├── docker-compose.yml  # 本地容器运行与冒烟测试配置

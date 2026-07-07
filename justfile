@@ -46,12 +46,12 @@ md:
 # Format all supported project files.
 fmt:
 	biome check --write .
-	prettier --write "src/content/docs/**/*.{md,mdx}" "src/components/**/*.astro"
+	prettier --write "src/content/docs/**/*.{md,mdx}" "src/components/**/*.{astro,svelte}"
 	rumdl fmt .
 
 # Check content formatting.
 fmt-check:
-	prettier --check "src/content/docs/**/*.{md,mdx}" "src/components/**/*.astro"
+	prettier --check "src/content/docs/**/*.{md,mdx}" "src/components/**/*.{astro,svelte}"
 
 # Run TypeScript type checking.
 type:

@@ -1,6 +1,6 @@
 import { unified } from "@astrojs/markdown-remark";
-import react from "@astrojs/react";
 import starlight from "@astrojs/starlight";
+import svelte from "@astrojs/svelte";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import tailwindcss from "@tailwindcss/vite";
@@ -107,7 +107,7 @@ export default defineConfig({
 				},
 			],
 		}),
-		react(),
+		svelte(),
 	],
 
 	vite: {

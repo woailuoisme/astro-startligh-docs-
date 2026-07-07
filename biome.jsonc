@@ -8,9 +8,9 @@
 	"files": {
 		"ignoreUnknown": true,
 		"includes": [
-			"*.{css,js,jsx,json,jsonc,mjs,ts,tsx}",
+			"*.{css,js,json,jsonc,mjs,ts}",
 			".*.{json,jsonc}",
-			"src/**/*.{css,js,jsx,json,jsonc,mjs,ts,tsx}",
+			"src/**/*.{css,js,json,jsonc,mjs,ts}",
 			"!**/node_modules",
 			"!dist",
 			"!.astro",
@@ -37,11 +37,10 @@
 		"enabled": true,
 		"domains": {
 			"types": "recommended",
-			"project": "recommended",
-			"react": "recommended"
+			"project": "recommended"
 		},
 		"rules": {
-			"recommended": true
+			"preset": "recommended"
 		}
 	},
 	"javascript": {

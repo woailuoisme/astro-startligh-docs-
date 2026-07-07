@@ -2,15 +2,15 @@ pre-commit:
   parallel: true
   jobs:
     - name: biome
-      glob: "*.{css,js,jsx,json,jsonc,mjs,ts,tsx}"
+      glob: "*.{css,js,json,jsonc,mjs,ts}"
       run: biome check --write --no-errors-on-unmatched {staged_files}
 
     - name: prettier-content
-      glob: "*.{astro,md,mdx}"
+      glob: "*.{astro,md,mdx,svelte}"
       run: prettier --write {staged_files}
 
     - name: tsc
-      glob: "*.{ts,tsx,mts,cts}"
+      glob: "*.{ts,mts,cts}"
       run: tsc --noEmit
 
     - name: astro-check
