@@ -1,7 +1,0 @@
-{
-	"plugins": ["prettier-plugin-astro", "prettier-plugin-svelte"],
-	"proseWrap": "preserve",
-	"singleQuote": false,
-	"tabWidth": 2,
-	"useTabs": false
-}

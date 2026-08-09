@@ -5,9 +5,11 @@ import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-s
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
+import astroD2 from "astro-d2";
 import icon from "astro-icon";
 import mermaid from "astro-mermaid";
 import { pluginColorChips } from "expressive-code-color-chips";
+import { pluginFullscreen } from "expressive-code-fullscreen";
 import ecTwoSlash from "expressive-code-twoslash";
 import starlightGithubAlerts from "starlight-github-alerts";
 import starlightHeadingBadges from "starlight-heading-badges";
@@ -24,9 +26,12 @@ export default defineConfig({
 	},
 
 	integrations: [
+		astroD2(),
 		// mermaid 必须在 starlight 之前
 		mermaid({
 			autoTheme: true,
+			theme: "neutral",
+			darkTheme: "dark",
 			mermaidConfig: {
 				flowchart: { curve: "linear" },
 			},
@@ -70,6 +75,7 @@ export default defineConfig({
 					pluginLineNumbers(), // 显示行号
 					pluginCollapsibleSections(), // 代码块可折叠区段
 					pluginColorChips(), // CSS 颜色代码预览色卡
+					pluginFullscreen(), // 代码块全屏按钮
 					ecTwoSlash(), // TypeScript 类型提示悬浮交互
 				],
 				styleOverrides: {

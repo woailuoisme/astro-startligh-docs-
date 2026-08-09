@@ -15,21 +15,21 @@ This is an Astro + Starlight documentation site.
 ## Build, Test, and Development Commands
 
 - `mise install` installs the pinned local toolchain from `.mise.toml`.
-- `just setup` installs the pinned toolchain and project dependencies.
-- `just --list` lists the available task shortcuts.
-- `just dev` starts the local site at `http://localhost:4321`.
-- `just build` creates the production output in `dist/`.
-- `just preview` serves the built site locally.
-- `just cf` previews the built site with Cloudflare Pages.
-- `just deploy` deploys `dist/` to Cloudflare Pages project `vending-docs`.
-- `just check` runs `astro check` for framework-level validation.
-- `just lint` runs Biome formatting and linting.
-- `just md` runs Markdown and MDX lint checks.
-- `just fmt` runs Biome, Prettier, and markdownlint auto-fixes.
-- `just fmt-check` checks Markdown, MDX, and Astro content formatting.
-- `just type` runs `tsc --noEmit` for type checking.
-- `just unused` runs Knip unused code/dependency checks.
-- `just verify` runs the standard local verification suite.
+- `mise run setup` installs the pinned toolchain and project dependencies.
+- `mise tasks` lists the available task shortcuts.
+- `mise run dev` starts the local site at `http://localhost:4321`.
+- `mise run build` creates the production output in `dist/`.
+- `mise run preview` serves the built site locally.
+- `mise run cf` previews the built site with Cloudflare Pages.
+- `mise run deploy` deploys `dist/` to Cloudflare Pages project `vending-docs`.
+- `mise run check` runs `astro check` for framework-level validation.
+- `mise run lint` runs Biome formatting and linting.
+- `mise run md` runs Markdown and MDX lint checks.
+- `mise run fmt` runs Biome and rumdl auto-fixes.
+- `mise run fmt-check` checks project formatting using Biome and rumdl.
+- `mise run type` runs `tsc --noEmit` for type checking.
+- `mise run unused` runs Knip unused code/dependency checks.
+- `mise run verify` runs the standard local verification suite.
 - `bun install --frozen-lockfile` installs dependencies from `bun.lock`.
 
 ## Coding Style & Naming Conventions
