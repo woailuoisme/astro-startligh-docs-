@@ -1,98 +1,53 @@
-# Repository Guidelines
+# 仓库开发与协作指南
 
-## Project Structure & Module Organization
+本项目为基于 Astro + Starlight 构建的静态产品 API 协议文档站点。
 
-This is an Astro + Starlight documentation site.
+## 目录结构
 
-- `src/content/docs/` contains the docs content (`.md` and `.mdx`) exposed as routes.
-- `src/content.config.ts` defines content collections and schema.
-- `src/assets/` holds imported images and local media used in docs.
-- `public/` is for static files such as `favicon.svg`.
-- `src/styles/global.css` contains global styling.
-- `astro.config.mjs` and `tsconfig.json` hold project-wide build and TypeScript settings.
-- `.env.example` documents optional public build-time variables such as Cloudflare Web Analytics.
+- `src/content/docs/`：文档路由与内容源文件（Markdown/MDX）。
+- `src/content.config.ts`：内容集合定义与模式约束。
+- `src/assets/`：文档内引用的本地静态资源与媒体文件。
+- `public/`：根级静态资源（如 `favicon.svg`）。
+- `src/styles/global.css`：全局样式。
+- `astro.config.mjs` & `tsconfig.json`：Astro 与 TypeScript 编译配置。
+- `.mise.toml`：本地开发工具链版本固定配置。
 
-## Build, Test, and Development Commands
+## 核心命令
 
-- `mise install` installs the pinned local toolchain from `.mise.toml`.
-- `mise run setup` installs the pinned toolchain and project dependencies.
-- `mise tasks` lists the available task shortcuts.
-- `mise run dev` starts the local site at `http://localhost:4321`.
-- `mise run build` creates the production output in `dist/`.
-- `mise run preview` serves the built site locally.
-- `mise run cf` previews the built site with Cloudflare Pages.
-- `mise run deploy` deploys `dist/` to Cloudflare Pages project `vending-docs`.
-- `mise run check` runs `astro check` for framework-level validation.
-- `mise run lint` runs Biome formatting and linting.
-- `mise run md` runs Markdown and MDX lint checks.
-- `mise run fmt` runs Biome and rumdl auto-fixes.
-- `mise run fmt-check` checks project formatting using Biome and rumdl.
-- `mise run type` runs `tsc --noEmit` for type checking.
-- `mise run unused` runs Knip unused code/dependency checks.
-- `mise run verify` runs the standard local verification suite.
-- `bun install --frozen-lockfile` installs dependencies from `bun.lock`.
+所有任务统一通过 `pnpm` 脚本管理：
 
-## Coding Style & Naming Conventions
+- `mise install`：安装固定版本的运行时与 CLI 工具。
+- `pnpm install --frozen-lockfile`：严格依据锁定文件安装依赖。
+- `pnpm dev`：启动本地开发服务器（`http://localhost:4321`）。
+- `pnpm build`：构建静态站点至 `dist/`。
+- `pnpm preview`：本地预览构建产物。
+- `pnpm cf:build`：构建静态生产文件。
+- `pnpm cf:deploy`：部署 `dist/` 至 Cloudflare Pages（项目名 `vending-docs`）。
+- `pnpm check`：执行 `astro check` 框架级语法与模板校验。
+- `pnpm lint`：执行 Biome 校验与格式化修复。
+- `pnpm md`：执行 rumdl Markdown/MDX 语法校验。
+- `pnpm fmt` / `pnpm fmt:check`：自动格式化 / 格式合规检查（Biome + rumdl）。
+- `pnpm type`：执行 `tsc --noEmit` 进行 TypeScript 类型检查。
+- `pnpm unused`：执行 Knip 检查未使用的代码与依赖。
+- `pnpm verify`：运行完整本地校验套件（提交前必跑：lint + md + type + check + build）。
 
-- Use tabs for indentation.
-- Use double quotes in JavaScript, TypeScript, and config files.
-- Prefer small, focused Markdown/MDX files under `src/content/docs/`.
-- Name docs files by protocol or topic, for example `sse/index.mdx` or `websocket/index.mdx`.
-- Use Biome for formatting and import organization; do not hand-format against the configured rules.
+## 代码规范与约定
 
-## Testing Guidelines
+- **缩进**：使用 Tab 缩进。
+- **引号**：JS、TS 及配置文件中统一使用双引号。
+- **文档拆分**：文档保持小而专注，按协议/主题归类组织（如 `sse/index.mdx`、`websocket/index.mdx`）。
+- **自动化格式**：提交必须由 Biome 及 rumdl 校验通过，避免人工对抗格式规则。
 
-There is no dedicated test suite in this repository. Use the validation commands above before opening a PR:
+## Agent 协作指引
 
-- `just verify`
-
-Or run the equivalent underlying commands:
-
-- `just lint`
-- `just md`
-- `just type`
-- `just check`
-- `just build`
-
-If you change docs rendering or layout, also verify the result in `just dev`.
-
-## Commit & Pull Request Guidelines
-
-Recent commits use short, direct messages such as `fix`. Keep subjects concise and imperative.
-
-For pull requests, include:
-
-- A short summary of the change
-- The commands you ran to validate it
-- Screenshots or preview notes for visible docs/UI changes
-- Links to any related issue or task
-
-## Agent-Specific Instructions
-
-- Keep changes scoped to the docs site; avoid introducing extra tooling unless it is needed.
-- Prefer editing content under `src/content/docs/` and shared styles only when required.
-- Update `AGENTS.md` when project commands, structure, or workflow change.
-- When verifying documentation or framework behavior, prefer MCP doc sources in this order: `context7` first, then `exa`, `tavily`, and `fetch`.
-- Use official docs, upstream READMEs, and source files as the source of truth whenever possible.
-- When you quote or reference docs, keep the excerpt short and include links; prefer line-level references when the source exposes them.
-
-<!-- SPECKIT START -->
-For additional context about technologies to be used, project structure,
-shell commands, and other important information, read `specs/001-api-protocol-docs/plan.md`
-<!-- SPECKIT END -->
+- **变更范围约束**：修改聚焦于文档站内容；除非显式要求，避免引入额外工具链或复杂运行时依赖。
+- **文档查阅准则**：框架与库行为验证优先使用 MCP：`context7` > `exa` > `tavily` > `fetch`。以官方权威文档与源码为准，引用保持简短精准。
+- **保持同步**：项目命令、结构或流程发生变更时，需同步维护更新 `AGENTS.md`。
 
 @RTK.md
 
-## Agent skills
+### 本地追踪与领域文档
 
-### Issue tracker
-
-Issues live as local Markdown files under `.scratch/`. See `docs/agents/issue-tracker.md`.
-
-### Triage labels
-
-Uses the five default canonical role strings (needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix). See `docs/agents/triage-labels.md`.
-
-### Domain docs
-
-Single-context repo — one `CONTEXT.md` + `docs/adr/` at the root. See `docs/agents/domain.md`.
+- **任务管理**：本地 Markdown 任务存放在 `.scratch/`（参考 `docs/agents/issue-tracker.md`）。
+- **分类标签**：`needs-triage`、`needs-info`、`ready-for-agent`、`ready-for-human`、`wontfix`。
+- **领域模型**：单上下文架构，根目录维护 `CONTEXT.md`，架构决策记录于 `docs/adr/`。

@@ -1,4 +1,3 @@
-import { unified } from "@astrojs/markdown-remark";
 import starlight from "@astrojs/starlight";
 import svelte from "@astrojs/svelte";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
@@ -21,10 +20,6 @@ const cloudflareWebAnalyticsToken =
 	process.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
 
 export default defineConfig({
-	markdown: {
-		processor: unified(),
-	},
-
 	integrations: [
 		astroD2(),
 		// mermaid 必须在 starlight 之前

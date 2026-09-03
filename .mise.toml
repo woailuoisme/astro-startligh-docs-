@@ -1,36 +1,8 @@
 [tools]
-# Runtimes
-node = "latest"
-bun = "latest"
-
-# Task & Automation
+node = "24"
+pnpm = "latest"
 lefthook = "latest"
-
-# Linters & Formatters
 biome = "latest"
 rumdl = "latest"
-
-# Deployment
 wrangler = "latest"
-
-# Static Analysis
-dprint = "latest"
-
-# Diagramming
 d2 = "latest"
-
-[tasks]
-setup = ["mise install", "bun install --frozen-lockfile"]
-dev = "astro dev"
-build = "astro build"
-preview = "astro preview"
-cf = { depends = ["build"], run = "wrangler pages dev ./dist" }
-deploy = { depends = ["build"], run = "wrangler pages deploy ./dist --project-name vending-docs" }
-check = "astro check"
-lint = "biome check --write ."
-md = "rumdl check ."
-fmt = ["biome check --write .", "rumdl fmt ."]
-fmt-check = ["biome check .", "rumdl check ."]
-type = "tsc --noEmit"
-unused = "knip"
-verify = { depends = ["lint", "md", "type", "check", "build"] }

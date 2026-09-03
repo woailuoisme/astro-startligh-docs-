@@ -6,7 +6,8 @@ VendingAPI Docs 是一个基于 Astro + Starlight 构建的静态产品 API 协�
 ## 技术栈
 
 - **框架**: [Astro](https://astro.build/) & [Starlight](https://starlight.astro.build/)
-- **运行环境**: [Bun](https://bun.sh/)
+- **包管理器**: [pnpm](https://pnpm.io/)
+- **运行环境**: Node.js
 - **工具链**: [mise](https://mise.jdx.dev/)（工具集管理）& [just](https://github.com/casey/just)（任务运行器）
 - **样式**: Tailwind CSS 4
 - **格式化与校验**: Biome, Prettier & markdownlint
@@ -48,17 +49,15 @@ just build
 
 ## 常用命令
 
-运行 `just` 即可查看所有可用任务，以下为核心命令：
-
 | 命令             | 描述                                                  |
 | ---------------- | ----------------------------------------------------- |
-| `just dev`     | 启动本地开发服务器                                    |
-| `just build`   | 构建静态生产版本                                      |
-| `just preview` | 本地预览构建好的静态网页                              |
-| `just cf`      | 本地模拟 Cloudflare Pages 环境预览                    |
-| `just deploy`  | 部署至 Cloudflare Pages 对应项目                      |
-| `just fmt`     | 自动格式化代码与文档（Biome, Prettier, markdownlint） |
-| `just verify`  | 运行完整本地校验套件                                  |
+| `pnpm dev`       | 启动本地开发服务器                                    |
+| `pnpm build`     | 构建静态生产版本                                      |
+| `pnpm preview`   | 本地预览构建好的静态网页                              |
+| `pnpm cf:build`  | 构建静态生产文件                                      |
+| `pnpm cf:deploy` | 部署至 Cloudflare Pages 对应项目                      |
+| `pnpm fmt`       | 自动格式化代码与文档（Biome, rumdl）                  |
+| `pnpm verify`    | 运行完整本地校验套件                                  |
 
 ## 项目结构
 
@@ -70,7 +69,6 @@ just build
 │   └── styles/         # 全局 CSS 样式
 ├── Dockerfile          # 基于 Nginx 的静态运行时 Docker 配置
 ├── docker-compose.yml  # 本地容器运行与冒烟测试配置
-├── justfile            # just 任务快捷键定义
 └── wrangler.jsonc      # Cloudflare Pages 部署配置
 ```
 
@@ -79,7 +77,8 @@ just build
 ### Cloudflare Pages
 
 ```bash
-just deploy
+pnpm cf:build
+pnpm cf:deploy
 ```
 
 ### Docker
