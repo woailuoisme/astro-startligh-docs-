@@ -1,8 +1,7 @@
 [tools]
 node = "24"
-pnpm = "latest"
+bun = "latest"
 lefthook = "latest"
-biome = "latest"
 rumdl = "latest"
 wrangler = "latest"
 d2 = "latest"

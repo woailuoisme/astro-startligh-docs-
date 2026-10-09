@@ -1,9 +1,15 @@
 pre-commit:
   parallel: true
   jobs:
-    - name: biome
+    - name: oxfmt
       glob: "*.{astro,css,js,json,jsonc,mjs,svelte,ts}"
-      run: biome check --write --no-errors-on-unmatched {staged_files}
+      run: oxfmt --write --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+
+    - name: oxlint
+      glob: "*.{astro,js,json,jsonc,mjs,svelte,ts}"
+      run: oxlint --fix --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
 
     - name: rumdl
       glob: "*.{md,mdx}"
@@ -14,4 +20,4 @@ pre-commit:
       run: tsc --noEmit
 
     - name: astro-check
-      run: pnpm exec astro check
+      run: bun x astro check

@@ -1,0 +1,55 @@
+# ── Pull Request：质量门禁检查 ────────────────────────────────────────
+pull_request:
+  - stages:
+      - name: Quality gate verification
+        image: oven/bun:1-alpine
+        script: |
+          set -euo pipefail
+          apk add --no-cache curl tar ca-certificates make gcompat
+          curl -fsSL https://d2lang.com/install.sh | sh -s --
+
+          bun install --frozen-lockfile
+          bun run type
+          bun run check
+          bun run build
+
+# ── main 分支：代码推送与手动触发 ────────────────────────────────────
+main:
+  # 推送 main 自动触发：构建并推送 Alpine (linux/amd64) 镜像与构建缓存
+  push: &docker_build
+    - services:
+        - docker
+      stages:
+        - name: Docker build and push
+          script: |
+            set -euo pipefail
+            REGISTRY="${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}"
+            docker buildx build \
+              --platform linux/amd64 \
+              --cache-from type=registry,ref=${REGISTRY}:cache \
+              --cache-to type=registry,ref=${REGISTRY}:cache,mode=max,image-manifest=true,oci-mediatypes=true \
+              -t "${REGISTRY}:latest" \
+              --push .
+
+  # 网页手动触发：与 main 推送流水线保持一致
+  web_trigger: *docker_build
+
+# ── 版本发布：仅在推送 v* 标签时执行 ──────────────────────────────────
+$:
+  # 推送 v* 标签：复用 main 缓存，构建并推送版本镜像
+  tag_push:
+    - services:
+        - docker
+      stages:
+        - name: Build and push release image
+          script: |
+            set -euo pipefail
+            REGISTRY="${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}"
+            VERSION="${CNB_BRANCH##*/}"
+            docker buildx build \
+              --platform linux/amd64 \
+              --cache-from type=registry,ref=${REGISTRY}:cache \
+              --cache-to type=registry,ref=${REGISTRY}:cache,mode=max,image-manifest=true,oci-mediatypes=true \
+              -t "${REGISTRY}:${VERSION}" \
+              -t "${REGISTRY}:latest" \
+              --push .
