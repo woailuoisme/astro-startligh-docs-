@@ -12,6 +12,7 @@
 - `astro.config.mjs` & `tsconfig.json`：Astro 与 TypeScript 编译配置。
 - `Dockerfile` & `docker-compose.yml`：基于 Nginx 的静态多阶段构建及本地测试配置（映射端口 3110:80）。
 - `.cnb.yml` & `.cnb/`：cnb.cool 云原生构建、质量门禁、镜像推送及部署配置。
+- `.github/workflows/`：GitHub Actions 自动化流水线（基于 Ubuntu 24.04 的 GHCR 镜像构建与发布）。
 - `.mise.toml`：本地开发工具链版本固定配置。
 
 ## 核心命令
