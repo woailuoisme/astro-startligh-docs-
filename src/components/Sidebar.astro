@@ -6,21 +6,25 @@ import type { StarlightRouteData } from "@astrojs/starlight/route-data";
 
 const { sidebar } = (Astro.locals as { starlightRoute: StarlightRouteData })
 	.starlightRoute;
-const pathname = Astro.url.pathname;
+const { pathname } = Astro.url;
 
-let filteredSidebar = sidebar;
+const SECTION_MAP: Record<string, string> = {
+	"/mqtt5": "MQTT 5",
+	"/sse": "SSE",
+	"/websocket": "WebSocket",
+};
 
-if (pathname === "/") {
-	filteredSidebar = [];
-} else if (pathname.startsWith("/mqtt5")) {
-	filteredSidebar = sidebar.filter((entry) => entry.label === "MQTT 5");
-} else if (pathname.startsWith("/sse")) {
-	filteredSidebar = sidebar.filter((entry) => entry.label === "SSE");
-} else if (pathname.startsWith("/websocket")) {
-	filteredSidebar = sidebar.filter((entry) => entry.label === "WebSocket");
-} else {
-	filteredSidebar = sidebar;
-}
+const activeSection = Object.entries(SECTION_MAP).find(([prefix]) =>
+	pathname.startsWith(prefix)
+)?.[1];
+
+const filteredSidebar =
+	pathname === "/"
+		? []
+		: activeSection
+			? sidebar.filter((entry) => entry.label === activeSection)
+			: sidebar;
+
 ---
 
 <SidebarPersister>

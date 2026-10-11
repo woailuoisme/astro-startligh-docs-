@@ -1,17 +1,13 @@
 import starlight from "@astrojs/starlight";
-import svelte from "@astrojs/svelte";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import tailwindcss from "@tailwindcss/vite";
 import astroD2 from "astro-d2";
-import icon from "astro-icon";
 import mermaid from "astro-mermaid";
 import { defineConfig } from "astro/config";
 import { pluginColorChips } from "expressive-code-color-chips";
 import { pluginFullscreen } from "expressive-code-fullscreen";
-import ecTwoSlash from "expressive-code-twoslash";
 import starlightGithubAlerts from "starlight-github-alerts";
-import starlightHeadingBadges from "starlight-heading-badges";
 import starlightImageZoom from "starlight-image-zoom";
 import starlightLinksValidator from "starlight-links-validator";
 import starlightScrollToTop from "starlight-scroll-to-top";
@@ -28,11 +24,6 @@ export default defineConfig({
 			darkTheme: "dark",
 			mermaidConfig: {
 				flowchart: { curve: "linear" }
-			}
-		}),
-		icon({
-			include: {
-				lucide: ["*"] // Lucide 图标库
 			}
 		}),
 		starlight({
@@ -52,14 +43,6 @@ export default defineConfig({
 						}
 					]
 				: [],
-
-			social: [
-				{
-					icon: "github",
-					label: "GitHub",
-					href: "https://github.com/your-org/your-repo"
-				}
-			],
 			// Expressive Code 代码块配置（Starlight 内置，无需单独安装）
 			expressiveCode: {
 				themes: ["starlight-dark", "starlight-light"],
@@ -69,8 +52,7 @@ export default defineConfig({
 					pluginLineNumbers(), // 显示行号
 					pluginCollapsibleSections(), // 代码块可折叠区段
 					pluginColorChips(), // CSS 颜色代码预览色卡
-					pluginFullscreen(), // 代码块全屏按钮
-					ecTwoSlash() // TypeScript 类型提示悬浮交互
+					pluginFullscreen() // 代码块全屏按钮
 				],
 				styleOverrides: {
 					borderRadius: "8px",
@@ -81,7 +63,6 @@ export default defineConfig({
 				starlightImageZoom(), // 图片点击放大
 				starlightGithubAlerts(), // GitHub 风格告警块
 				starlightScrollToTop(), // 回到顶部按钮
-				starlightHeadingBadges(), // 标题内嵌 badge
 				starlightLinksValidator() // 构建时自动验证 Markdown 内部链接与锚点有效性
 			],
 			components: {
@@ -106,8 +87,7 @@ export default defineConfig({
 					items: [{ autogenerate: { directory: "mqtt5" } }]
 				}
 			]
-		}),
-		svelte()
+		})
 	],
 
 	vite: {

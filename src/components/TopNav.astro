@@ -2,44 +2,35 @@
 import DefaultSearch from "@astrojs/starlight/components/Search.astro";
 
 const links = [
-	{
-		href: "/",
-		label: "首页",
-		current: (pathname: string) => pathname === "/",
-	},
-	{
-		href: "/mqtt5/",
-		label: "MQTT 5",
-		current: (pathname: string) => pathname.startsWith("/mqtt5"),
-	},
-	{
-		href: "/sse/",
-		label: "SSE",
-		current: (pathname: string) => pathname.startsWith("/sse"),
-	},
-	{
-		href: "/websocket/",
-		label: "WebSocket",
-		current: (pathname: string) => pathname.startsWith("/websocket"),
-	},
+  { href: "/", label: "首页" },
+  { href: "/websocket/", label: "WebSocket" },
+  { href: "/sse/", label: "SSE" },
+  { href: "/mqtt5/", label: "MQTT 5" },
 ];
 
-const pathname = Astro.url.pathname;
+const { pathname } = Astro.url;
+const isCurrent = (href: string) =>
+  href === "/"
+    ? pathname === "/"
+    : pathname.startsWith(href.replace(/\/$/, ""));
 ---
 
 <div class="flex items-center justify-end grow gap-4">
-	<nav class="hidden min-[50rem]:flex items-center justify-center gap-1" aria-label="主导航">
-		{
-			links.map(({ href, label, current }) => (
-				<a
-					href={href}
-					aria-current={current(pathname) ? "page" : undefined}
-					class="rounded-lg text-(--sl-color-gray-2) text-(length:--sl-text-base) font-medium px-3 py-2 no-underline hover:text-(--sl-color-white) aria-[current=page]:bg-(--sl-color-gray-6)"
-				>
-					{label}
-				</a>
-			))
-		}
-	</nav>
-	<DefaultSearch {...Astro.props} />
+  <nav
+    class="hidden min-[50rem]:flex items-center justify-center gap-1"
+    aria-label="主导航"
+  >
+    {
+      links.map(({ href, label }) => (
+        <a
+          href={href}
+          aria-current={isCurrent(href) ? "page" : undefined}
+          class="rounded-lg text-(--sl-color-gray-2) text-(length:--sl-text-base) font-medium px-3 py-2 no-underline hover:text-(--sl-color-white) aria-[current=page]:bg-(--sl-color-gray-6)"
+        >
+          {label}
+        </a>
+      ))
+    }
+  </nav>
+  <DefaultSearch {...Astro.props} />
 </div>
